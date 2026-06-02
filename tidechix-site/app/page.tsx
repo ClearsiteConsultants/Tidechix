@@ -1,28 +1,27 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-[#06395c]">
-      <header className="flex h-24 items-center justify-between border-b bg-white px-10">
-        <div className="flex items-center gap-4">
+    <main className="min-h-screen overflow-x-hidden bg-white text-[#06395c]">
+      <header className="flex items-center justify-between border-b bg-white px-4 py-4 md:px-10">
+        <div className="flex items-center gap-3">
           <img
             src="/peptide-chix-logo.png"
-            alt=""
-            className="h-20 w-auto object-contain"
+            alt="The Peptide Chix"
+            className="h-16 w-auto md:h-20"
           />
 
           <div>
-            <h1 className="text-xl font-bold text-[#06395c]">
+            <h1 className="text-lg font-bold text-[#06395c] md:text-2xl">
               THE PEPTIDE CHIX
             </h1>
-            <p className="text-xs tracking-widest text-[#ec4aa3]">
+            <p className="text-xs tracking-[0.2em] text-[#ec4aa3]">
               WELLNESS • RECOVERY • LONGEVITY
             </p>
           </div>
         </div>
 
-        <nav className="hidden gap-8 text-sm font-medium text-[#06395c] md:flex">
-          <a href="#about">About</a>
-          <a href="#products">Products</a>
-          <a href="#pricing">Pricing</a>
+        <nav className="hidden gap-8 text-sm font-medium md:flex">
+          <a href="/">Home</a>
+          <a href="/products">Products & Pricing</a>
           <a href="#education">Education</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -30,66 +29,71 @@ export default function Home() {
 
       <section className="relative">
         <div
-          className="h-[700px] bg-cover bg-center"
+          className="relative h-[420px] bg-cover bg-center md:h-[700px]"
           style={{
-            backgroundImage: "url('/Peptide-Therapy.webp')",
+            backgroundImage: "url('/peptide.jpeg')",
           }}
         >
-          <div className="h-full w-full bg-[#06395c]/30" />
+          <div className="absolute inset-0 bg-[#06395c]/15"></div>
+
+          <div
+            className="absolute bottom-0 left-0 h-72 w-full"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(236,74,163,.28), rgba(255,255,255,.85), transparent)",
+            }}
+          ></div>
+
+          <div className="absolute bottom-0 left-0 h-44 w-full bg-gradient-to-t from-white to-transparent"></div>
         </div>
 
-        <div className="absolute left-1/2 top-[420px] w-[900px] -translate-x-1/2 bg-white px-16 py-12 text-center shadow-xl">
-          <p className="text-lg tracking-wide text-[#ec4aa3]">
+        <div className="mx-4 -mt-20 rounded-2xl bg-white/90 px-6 py-10 text-center shadow-2xl backdrop-blur-sm md:absolute md:left-1/2 md:top-[430px] md:mx-0 md:w-[850px] md:-translate-x-1/2 md:px-16 md:py-14">
+          <p className="text-sm tracking-wide text-[#ec4aa3] md:text-lg">
             Longevity • Rejuvenation • Healing • Weight Loss
           </p>
 
-          <h2 className="mt-6 text-5xl font-light tracking-wide text-[#06395c]">
+          <h2 className="mt-6 text-3xl font-light tracking-wide md:text-5xl">
             Unlock the Power of
           </h2>
 
-          <h1 className="mt-2 text-7xl font-bold text-[#06395c]">
+          <h1 className="mt-3 text-5xl font-bold leading-tight text-[#06395c] md:text-7xl">
             Peptide Therapy
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-600">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-gray-600 md:text-lg">
             Premium peptide solutions designed to support healthy aging,
-            recovery, performance, wellness, and body composition goals.
+            recovery, wellness, longevity, body composition, and overall
+            vitality.
           </p>
 
-          <button className="mt-8 border border-[#06395c] px-12 py-4 font-semibold text-[#06395c] transition hover:bg-[#06395c] hover:text-white">
+          <a
+            href="/products"
+            className="mt-8 inline-block rounded-md bg-[#ec4aa3] px-10 py-4 font-semibold text-white transition hover:opacity-90"
+          >
             SHOP PEPTIDES
-          </button>
+          </a>
         </div>
       </section>
 
-      <section
-        id="products"
-        className="mx-auto mt-56 grid max-w-7xl gap-12 px-10 pb-24 md:grid-cols-3"
-      >
-        <div className="rounded-lg bg-white p-8 text-center shadow-lg">
-          <h3 className="text-3xl font-light tracking-[0.2em] text-[#06395c]">
-            WEIGHT LOSS
-          </h3>
+      <section className="mx-auto mt-16 grid max-w-7xl gap-8 px-6 pb-20 md:mt-56 md:grid-cols-3 md:px-10">
+        <div className="rounded-2xl bg-white p-8 text-center shadow-lg">
+          <h3 className="text-3xl font-light tracking-[0.2em]">WEIGHT LOSS</h3>
           <p className="mt-6 leading-8 text-gray-600">
-            Explore advanced peptide options designed to support appetite
-            control, metabolic health, and weight management goals.
+            Peptide options designed to support appetite control, metabolism,
+            and healthy weight management goals.
           </p>
         </div>
 
-        <div className="rounded-lg bg-white p-8 text-center shadow-lg">
-          <h3 className="text-3xl font-light tracking-[0.2em] text-[#06395c]">
-            RECOVERY
-          </h3>
+        <div className="rounded-2xl bg-white p-8 text-center shadow-lg">
+          <h3 className="text-3xl font-light tracking-[0.2em]">RECOVERY</h3>
           <p className="mt-6 leading-8 text-gray-600">
-            Support recovery, healing, tissue repair, and overall wellness with
-            carefully selected peptide solutions.
+            Support healing, tissue repair, body composition, and overall
+            wellness with carefully selected peptide solutions.
           </p>
         </div>
 
-        <div className="rounded-lg bg-white p-8 text-center shadow-lg">
-          <h3 className="text-3xl font-light tracking-[0.2em] text-[#06395c]">
-            LONGEVITY
-          </h3>
+        <div className="rounded-2xl bg-white p-8 text-center shadow-lg">
+          <h3 className="text-3xl font-light tracking-[0.2em]">LONGEVITY</h3>
           <p className="mt-6 leading-8 text-gray-600">
             Peptides focused on healthy aging, vitality, rejuvenation,
             performance, and quality of life.
@@ -97,62 +101,63 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="bg-[#fff5fa] px-10 py-24 text-center">
-        <p className="uppercase tracking-[0.4em] text-[#ec4aa3]">
+      <section id="about" className="bg-[#fff5fa] px-6 py-20 text-center md:px-10">
+        <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
           Science • Wellness • Results
         </p>
 
-        <h2 className="mt-6 text-5xl font-light tracking-wide text-[#06395c]">
+        <h2 className="mt-6 text-4xl font-light md:text-5xl">
           WHY PEPTIDES?
         </h2>
 
         <p className="mx-auto mt-8 max-w-4xl text-lg leading-9 text-gray-700">
-          Peptides are specialized compounds being explored for their potential
-          role in recovery, wellness, longevity, body composition, performance,
-          and overall quality of life.
+          Peptides are specialized compounds being explored for their role in
+          wellness, recovery, longevity, body composition, performance, and
+          overall quality of life.
         </p>
+
+        <a
+          href="/products"
+          className="mt-10 inline-block rounded-md border border-[#06395c] px-10 py-4 font-semibold text-[#06395c] transition hover:bg-[#06395c] hover:text-white"
+        >
+          VIEW PRODUCTS & PRICING
+        </a>
       </section>
 
-      <section id="education" className="px-10 py-24">
-        <h2 className="text-center text-5xl font-light tracking-wide text-[#06395c]">
+      <section id="education" className="bg-[#f7fbff] px-6 py-20 md:px-10">
+        <h2 className="text-center text-4xl font-light md:text-5xl">
           PEPTIDE EDUCATION
         </h2>
 
-        <div className="mx-auto mt-12 max-w-5xl rounded-xl bg-white p-10 shadow-lg">
+        <div className="mx-auto mt-12 max-w-5xl rounded-2xl bg-white p-10 shadow-lg">
           <p className="text-center text-lg leading-9 text-gray-700">
-            Educational information sheets can be added for each peptide,
-            including usage information, benefits, product details, frequently
-            asked questions, and supporting research.
+            Educational information sheets can be added for every peptide,
+            including benefits, product details, FAQs, usage information, and
+            supporting research.
           </p>
         </div>
       </section>
 
-      <section id="pricing" className="bg-[#f7fbff] px-10 py-24 text-center">
-        <h2 className="text-5xl font-light tracking-wide text-[#06395c]">
-          PRICING
-        </h2>
-
-        <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-700">
-          Products are sold per vial. Individual product pages will include
-          pricing, product information, availability, and ordering options.
-        </p>
-      </section>
-
       <section
         id="contact"
-        className="bg-[#06395c] px-10 py-24 text-center text-white"
+        className="bg-[#06395c] px-6 py-20 text-center text-white"
       >
-        <h2 className="text-5xl font-light tracking-wide">CONTACT US</h2>
+        <h2 className="text-4xl font-light md:text-5xl">
+          CONTACT THE PEPTIDE CHIX
+        </h2>
 
-        <p className="mt-10 text-2xl font-semibold">(801) 900-3711</p>
+        <p className="mt-8 text-2xl font-semibold">(801) 900-3711</p>
 
         <p className="mt-4 text-lg text-gray-300">
           Premium peptide products shipped throughout the United States.
         </p>
 
-        <button className="mt-10 rounded-md bg-white px-12 py-4 font-semibold text-[#06395c]">
-          CONTACT THE PEPTIDE CHIX
-        </button>
+        <a
+          href="/products"
+          className="mt-10 inline-block rounded-md bg-white px-10 py-4 font-semibold text-[#06395c]"
+        >
+          VIEW PRODUCTS
+        </a>
       </section>
     </main>
   );
