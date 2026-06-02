@@ -1,2 +1,2 @@
-# Tidchix
+# Tidechix
 Peptide Sales
