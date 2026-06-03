@@ -30,9 +30,7 @@ export default function Home() {
       <section className="relative">
         <div
           className="relative h-[420px] bg-cover bg-center md:h-[700px]"
-          style={{
-            backgroundImage: "url('/peptide.jpeg')",
-          }}
+          style={{ backgroundImage: "url('/peptide.jpeg')" }}
         >
           <div className="absolute inset-0 bg-[#06395c]/15"></div>
 
@@ -79,24 +77,24 @@ export default function Home() {
         <div className="rounded-2xl bg-white p-8 text-center shadow-lg">
           <h3 className="text-3xl font-light tracking-[0.2em]">WEIGHT LOSS</h3>
           <p className="mt-6 leading-8 text-gray-600">
-            Peptide options designed to support appetite control, metabolism,
-            and healthy weight management goals.
+            GLP peptide options designed to support appetite control,
+            metabolism, and healthy weight management goals.
           </p>
         </div>
 
         <div className="rounded-2xl bg-white p-8 text-center shadow-lg">
           <h3 className="text-3xl font-light tracking-[0.2em]">RECOVERY</h3>
           <p className="mt-6 leading-8 text-gray-600">
-            Support healing, tissue repair, body composition, and overall
-            wellness with carefully selected peptide solutions.
+            Wellness peptides focused on recovery, tissue support, body
+            composition, performance, and overall vitality.
           </p>
         </div>
 
         <div className="rounded-2xl bg-white p-8 text-center shadow-lg">
           <h3 className="text-3xl font-light tracking-[0.2em]">LONGEVITY</h3>
           <p className="mt-6 leading-8 text-gray-600">
-            Peptides focused on healthy aging, vitality, rejuvenation,
-            performance, and quality of life.
+            Peptides focused on healthy aging, rejuvenation, energy, cellular
+            wellness, and quality of life.
           </p>
         </div>
       </section>

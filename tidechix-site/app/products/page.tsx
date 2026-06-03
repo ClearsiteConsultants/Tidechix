@@ -1,26 +1,25 @@
-const stripeShopLink = "YOUR_STRIPE_LINK_HERE";
+const glpShopLink = "https://buy.stripe.com/bJebJ2dcAehR1uJ0bIaZi01";
+const wellnessShopLink = "https://buy.stripe.com/8x2fZi8Wk1v5ehv4rYaZi00";
 
-const productSections = [
+const glpProducts = [
   {
-    title: "Weight Loss & Metabolic Support",
-    products: [
-      {
-        name: "Retatrutide 15mg",
-        desc: "GLP support for weight management goals.",
-        price: "$100",
-      },
-      {
-        name: "Retatrutide 30mg",
-        desc: "GLP support for weight management goals.",
-        price: "$135",
-      },
-      {
-        name: "Tirzepatide 15mg",
-        desc: "Metabolic and weight management support.",
-        price: "$60",
-      },
-    ],
+    name: "Retatrutide 15mg",
+    desc: "GLP support for weight management goals.",
+    price: "$100",
   },
+  {
+    name: "Retatrutide 30mg",
+    desc: "GLP support for weight management goals.",
+    price: "$135",
+  },
+  {
+    name: "Tirzepatide 15mg",
+    desc: "Metabolic and weight management support.",
+    price: "$60",
+  },
+];
+
+const wellnessSections = [
   {
     title: "Muscle Performance, Strength & Recovery",
     products: [
@@ -165,9 +164,7 @@ export default function ProductsPage() {
       <section className="relative">
         <div
           className="relative h-[280px] bg-cover bg-center md:h-[420px]"
-          style={{
-            backgroundImage: "url('/peptide.jpeg')",
-          }}
+          style={{ backgroundImage: "url('/peptide.jpeg')" }}
         >
           <div className="absolute inset-0 bg-[#06395c]/30"></div>
           <div className="absolute bottom-0 left-0 h-48 w-full bg-gradient-to-t from-[#fff5fa] to-transparent"></div>
@@ -190,65 +187,139 @@ export default function ProductsPage() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-700">
-            Browse our complete peptide catalog, product descriptions, and
-            pricing. Products are sold per vial.
+            Choose the shopping category that best fits your needs. Each button
+            opens a secure Stripe checkout where customers can select products,
+            quantities, and supplies.
           </p>
 
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
             <a
-              href={stripeShopLink}
+              href={glpShopLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md bg-[#ec4aa3] px-10 py-4 font-semibold text-white transition hover:opacity-90"
+              className="rounded-xl bg-[#ec4aa3] px-8 py-5 font-semibold text-white shadow-lg transition hover:opacity-90"
             >
-              SHOP NOW
+              SHOP GLP PRODUCTS
             </a>
 
             <a
-              href="/"
-              className="rounded-md border border-[#06395c] px-10 py-4 font-semibold text-[#06395c] transition hover:bg-[#06395c] hover:text-white"
+              href={wellnessShopLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl bg-[#06395c] px-8 py-5 font-semibold text-white shadow-lg transition hover:opacity-90"
             >
-              RETURN TO HOME
+              SHOP WELLNESS PEPTIDES
             </a>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
-        <div className="space-y-12">
-          {productSections.map((section) => (
-            <div
-              key={section.title}
-              className="rounded-2xl bg-white p-6 shadow-lg md:p-10"
-            >
-              <h2 className="border border-[#06395c]/30 px-4 py-3 text-xl font-semibold uppercase tracking-[0.12em] md:text-2xl">
-                {section.title}
+        <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
+                Category 01
+              </p>
+              <h2 className="mt-3 text-3xl font-light md:text-5xl">
+                GLP Weight Loss Products
               </h2>
+              <p className="mt-4 max-w-3xl text-gray-700">
+                GLP-focused peptide products for weight management and metabolic
+                support.
+              </p>
+            </div>
 
-              <div className="mt-8 space-y-7">
-                {section.products.map((product) => (
-                  <div
-                    key={product.name}
-                    className="grid gap-3 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]"
-                  >
-                    <div>
-                      <h3 className="text-xl font-bold uppercase tracking-[0.12em]">
-                        {product.name}
-                      </h3>
+            <a
+              href={glpShopLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md bg-[#ec4aa3] px-8 py-4 text-center font-semibold text-white transition hover:opacity-90"
+            >
+              SHOP GLP PRODUCTS
+            </a>
+          </div>
 
-                      <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
-                        {product.desc}
+          <div className="mt-10 space-y-7">
+            {glpProducts.map((product) => (
+              <div
+                key={product.name}
+                className="grid gap-3 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]"
+              >
+                <div>
+                  <h3 className="text-xl font-bold uppercase tracking-[0.12em]">
+                    {product.name}
+                  </h3>
+                  <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
+                    {product.desc}
+                  </p>
+                </div>
+
+                <p className="text-2xl font-bold text-[#06395c]">
+                  {product.price}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-14 rounded-2xl bg-white p-6 shadow-lg md:p-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
+                Category 02
+              </p>
+              <h2 className="mt-3 text-3xl font-light md:text-5xl">
+                Wellness & Performance Peptides
+              </h2>
+              <p className="mt-4 max-w-3xl text-gray-700">
+                Recovery, longevity, cognitive, aesthetic, gut health, and
+                wellness peptide options.
+              </p>
+            </div>
+
+            <a
+              href={wellnessShopLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md bg-[#06395c] px-8 py-4 text-center font-semibold text-white transition hover:opacity-90"
+            >
+              SHOP WELLNESS PEPTIDES
+            </a>
+          </div>
+
+          <div className="mt-10 space-y-12">
+            {wellnessSections.map((section) => (
+              <div key={section.title}>
+                <h3 className="border border-[#06395c]/30 px-4 py-3 text-xl font-semibold uppercase tracking-[0.12em] md:text-2xl">
+                  {section.title}
+                </h3>
+
+                <div className="mt-8 space-y-7">
+                  {section.products.map((product) => (
+                    <div
+                      key={product.name}
+                      className="grid gap-3 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]"
+                    >
+                      <div>
+                        <h4 className="text-xl font-bold uppercase tracking-[0.12em]">
+                          {product.name}
+                        </h4>
+
+                        <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
+                          {product.desc}
+                        </p>
+                      </div>
+
+                      <p className="text-2xl font-bold text-[#06395c]">
+                        {product.price}
                       </p>
                     </div>
-
-                    <p className="text-2xl font-bold text-[#06395c]">
-                      {product.price}
-                    </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="mt-16 rounded-2xl bg-white px-6 py-12 text-center shadow-lg">
@@ -256,18 +327,30 @@ export default function ProductsPage() {
             READY TO ORDER?
           </p>
 
-          <p className="mt-3 text-lg text-gray-600">
-            Browse available products and complete your order online.
+          <p className="mx-auto mt-3 max-w-2xl text-lg text-gray-600">
+            Choose the category that best matches your order. Stripe will handle
+            secure checkout, customer information, and order details.
           </p>
 
-          <a
-            href={stripeShopLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-block rounded-md bg-[#ec4aa3] px-10 py-4 font-semibold text-white transition hover:opacity-90"
-          >
-            SHOP NOW
-          </a>
+          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <a
+              href={glpShopLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md bg-[#ec4aa3] px-10 py-4 font-semibold text-white transition hover:opacity-90"
+            >
+              SHOP GLP PRODUCTS
+            </a>
+
+            <a
+              href={wellnessShopLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-md bg-[#06395c] px-10 py-4 font-semibold text-white transition hover:opacity-90"
+            >
+              SHOP WELLNESS PEPTIDES
+            </a>
+          </div>
 
           <div className="mt-8">
             <p className="text-xl font-semibold">Questions?</p>
