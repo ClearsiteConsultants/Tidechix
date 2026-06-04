@@ -20,9 +20,21 @@ export default function Footer() {
         © {new Date().getFullYear()} The Peptide Chix. All rights reserved.
       </p>
 
-      <p className="mt-2">
-        Phone: (385) 269-9260 | Email: thetidechix@gmail.com
-      </p>
+     <div className="mt-2 flex flex-wrap justify-center gap-4">
+  <a
+    href="tel:+13852699260"
+    className="hover:text-[#ec4aa3] hover:underline"
+  >
+    📞 (385) 269-9260
+  </a>
+
+  <a
+    href="mailto:thetidechix@gmail.com"
+    className="hover:text-[#ec4aa3] hover:underline"
+  >
+    ✉ thetidechix@gmail.com
+  </a>
+</div>
     </footer>
   );
 }

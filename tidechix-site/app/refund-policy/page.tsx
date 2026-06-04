@@ -31,11 +31,27 @@ export default function RefundPolicyPage() {
           </p>
 
           <h2 className="mt-8 text-2xl font-semibold">Contact</h2>
-          <p className="mt-3 text-gray-700">
-            Phone: (385) 269-9260
-            <br />
-            Email: thetidechix@gmail.com
-          </p>
+        <div className="mt-3 space-y-2 text-gray-700">
+  <div>
+    📞{" "}
+    <a
+      href="tel:+13852699260"
+      className="text-[#ec4aa3] hover:underline"
+    >
+      (385) 269-9260
+    </a>
+  </div>
+
+  <div>
+    ✉{" "}
+    <a
+      href="mailto:thetidechix@gmail.com"
+      className="text-[#ec4aa3] hover:underline"
+    >
+      thetidechix@gmail.com
+    </a>
+  </div>
+</div>
         </div>
       </main>
       <Footer />

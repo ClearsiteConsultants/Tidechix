@@ -48,11 +48,29 @@ export default function TermsPage() {
           </p>
 
           <h2 className="mt-8 text-2xl font-semibold">Contact</h2>
-          <p className="mt-3 text-gray-700">
-            Phone: (385) 269-9260
-            <br />
-            Email: thetidechix@gmail.com
-          </p>
+<div>
+  <h2 className="mt-8 text-2xl font-semibold">Contact</h2>
+
+  <p className="mt-4 text-lg font-medium">
+    📞{" "}
+    <a
+      href="tel:+13852699260"
+      className="text-[#06395c] hover:text-[#ec4aa3] hover:underline"
+    >
+      (385) 269-9260
+    </a>
+  </p>
+
+  <p className="mt-2 text-lg">
+    ✉{" "}
+    <a
+      href="mailto:thetidechix@gmail.com"
+      className="text-[#ec4aa3] hover:underline"
+    >
+      thetidechix@gmail.com
+    </a>
+  </p>
+</div>
         </div>
       </main>
       <Footer />

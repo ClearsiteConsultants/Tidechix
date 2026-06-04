@@ -34,13 +34,25 @@ export default function SuccessPage() {
               Peptide Chix to arrange pickup instructions.
             </p>
 
-            <p className="mt-4 text-lg font-medium text-[#06395c]">
-              (385) 269-9260
-            </p>
+ <p className="mt-4 text-lg font-medium">
+  📞{" "}
+  <a
+    href="tel:+13852699260"
+    className="text-[#06395c] hover:text-[#ec4aa3] hover:underline"
+  >
+    (385) 269-9260
+  </a>
+</p>
 
-            <p className="mt-2 text-lg text-[#ec4aa3]">
-              thetidechix@gmail.com
-            </p>
+<p className="mt-2 text-lg">
+  ✉{" "}
+  <a
+    href="mailto:thetidechix@gmail.com"
+    className="text-[#ec4aa3] hover:underline"
+  >
+    thetidechix@gmail.com
+  </a>
+</p>
           </div>
 
           <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-6">
