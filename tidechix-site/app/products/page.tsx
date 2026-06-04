@@ -1,141 +1,244 @@
-const glpShopLink = "https://buy.stripe.com/bJebJ2dcAehR1uJ0bIaZi01";
-const wellnessShopLink = "https://buy.stripe.com/8x2fZi8Wk1v5ehv4rYaZi00";
+"use client";
 
-const glpProducts = [
-  {
-    name: "Retatrutide 15mg",
-    desc: "GLP support for weight management goals.",
-    price: "$100",
-  },
-  {
-    name: "Retatrutide 30mg",
-    desc: "GLP support for weight management goals.",
-    price: "$135",
-  },
-  {
-    name: "Tirzepatide 15mg",
-    desc: "Metabolic and weight management support.",
-    price: "$60",
-  },
+import { useEffect, useState } from "react";
+import { PRODUCTS, Product } from "@/app/lib/products";
+
+type CartItem = {
+  id: string;
+  quantity: number;
+};
+
+type ProductSection = {
+  title: string;
+  products: Product[];
+};
+
+const descriptions: Record<string, string> = {
+  retatrutide15: "GLP support for weight management goals.",
+  retatrutide30: "GLP support for weight management goals.",
+  tirzepatide15: "Metabolic and weight management support.",
+  hulkstack10:
+    "Growth hormone pathway support for recovery, sleep quality, body composition, and performance.",
+  sermorelin5:
+    "Supports natural growth hormone signaling, recovery, sleep, and body composition goals.",
+  tesamorelin10:
+    "Supports natural growth hormone signaling and metabolic support.",
+  wolverine10:
+    "BPC-157 + TB-500. Comprehensive recovery and soft tissue support.",
+  ghkcu50:
+    "Supports collagen health, skin texture, wound recovery, and hair wellness.",
+  melanotan1: "Associated with skin tanning and secondary libido effects.",
+  glowstack70:
+    "BPC-157 + TB-500 + GHK-CU. Skin, collagen, and tissue wellness support.",
+  klowstack80:
+    "BPC-157 + TB-500 + GHK-CU + KPV. Combined recovery, gut, inflammatory, and aesthetic support.",
+  semax10: "Supports focus, memory, mental clarity, and cognitive performance.",
+  selank10: "Associated with calm focus, mood balance, and stress resilience.",
+  dsip10: "Supports sleep quality and nervous system recovery.",
+  motsc10:
+    "Investigational mitochondrial peptide associated with metabolic efficiency and energy production.",
+  nad1000:
+    "Supports mitochondrial energy production, cognitive performance, and cellular health.",
+  ss31:
+    "Investigational mitochondrial support compound associated with cellular energy and longevity research.",
+  kpv10: "Associated with gastrointestinal inflammatory support.",
+  glutathione1500: "Supports detoxification and immune wellness.",
+  kisspeptin10:
+    "Supports libido, hormone communication, and reproductive wellness.",
+  alcoholwipes: "Box of 100 alcohol wipes.",
+  reconstitutionneedles: "Reconstitution needles. $2.00 per needle.",
+  syringes10pack: "10-pack of insulin unit syringes.",
+};
+
+function getProduct(id: string) {
+  const product = PRODUCTS.find((item) => item.id === id);
+
+  if (!product) {
+    throw new Error(`Missing product: ${id}`);
+  }
+
+  return product;
+}
+
+const glpProducts: Product[] = [
+  getProduct("retatrutide15"),
+  getProduct("retatrutide30"),
+  getProduct("tirzepatide15"),
 ];
 
-const wellnessSections = [
+const wellnessSections: ProductSection[] = [
   {
     title: "Muscle Performance, Strength & Recovery",
     products: [
-      {
-        name: "CJC-1295 + Ipamorelin 10mg",
-        desc: "Growth hormone pathway support for recovery, sleep quality, body composition, and performance.",
-        price: "$75",
-      },
-      {
-        name: "Sermorelin 5mg",
-        desc: "Supports natural growth hormone signaling, recovery, sleep, and body composition goals.",
-        price: "$60",
-      },
-      {
-        name: "Tesamorelin 10mg",
-        desc: "Supports natural growth hormone signaling and metabolic support.",
-        price: "$65",
-      },
-      {
-        name: "Wolverine Stack 10mg",
-        desc: "BPC-157 + TB-500. Comprehensive recovery and soft tissue support.",
-        price: "$65",
-      },
+      getProduct("hulkstack10"),
+      getProduct("sermorelin5"),
+      getProduct("tesamorelin10"),
+      getProduct("wolverine10"),
     ],
   },
   {
     title: "Skin, Hair & Aesthetic Wellness",
     products: [
-      {
-        name: "GHK-CU 50mg",
-        desc: "Supports collagen health, skin texture, wound recovery, and hair wellness.",
-        price: "$50",
-      },
-      {
-        name: "Melanotan 1 10mg",
-        desc: "Associated with skin tanning and secondary libido effects.",
-        price: "$40",
-      },
-      {
-        name: "Glow Stack 70mg",
-        desc: "BPC-157 + TB-500 + GHK-CU. Skin, collagen, and tissue wellness support.",
-        price: "$100",
-      },
-      {
-        name: "Klow Stack 80mg",
-        desc: "BPC-157 + TB-500 + GHK-CU + KPV. Combined recovery, gut, inflammatory, and aesthetic support.",
-        price: "$120",
-      },
+      getProduct("ghkcu50"),
+      getProduct("melanotan1"),
+      getProduct("glowstack70"),
+      getProduct("klowstack80"),
     ],
   },
   {
     title: "Cognitive Wellness, Mood & Sleep Support",
     products: [
-      {
-        name: "Semax 10mg",
-        desc: "Supports focus, memory, mental clarity, and cognitive performance.",
-        price: "$50",
-      },
-      {
-        name: "Selank 10mg",
-        desc: "Associated with calm focus, mood balance, and stress resilience.",
-        price: "$40",
-      },
-      {
-        name: "DSIP 10mg",
-        desc: "Supports sleep quality and nervous system recovery.",
-        price: "$40",
-      },
-      {
-        name: "MOTS-C 10mg",
-        desc: "Investigational mitochondrial peptide associated with metabolic efficiency and energy production.",
-        price: "$60",
-      },
-      {
-        name: "NAD+ 1000mg",
-        desc: "Supports mitochondrial energy production, cognitive performance, and cellular health.",
-        price: "$75",
-      },
-      {
-        name: "SS-31 10mg",
-        desc: "Investigational mitochondrial support compound associated with cellular energy and longevity research.",
-        price: "$50",
-      },
+      getProduct("semax10"),
+      getProduct("selank10"),
+      getProduct("dsip10"),
+      getProduct("motsc10"),
+      getProduct("nad1000"),
+      getProduct("ss31"),
     ],
   },
   {
     title: "Gut Health & Inflammatory Support",
-    products: [
-      {
-        name: "KPV 10mg",
-        desc: "Associated with gastrointestinal inflammatory support.",
-        price: "$40",
-      },
-      {
-        name: "Glutathione 1500mg",
-        desc: "Supports detoxification and immune wellness.",
-        price: "$45",
-      },
-    ],
+    products: [getProduct("kpv10"), getProduct("glutathione1500")],
   },
   {
     title: "Sexual Wellness & Intimacy Support",
-    products: [
-      {
-        name: "Kisspeptin-10",
-        desc: "Supports libido, hormone communication, and reproductive wellness.",
-        price: "$65",
-      },
-    ],
+    products: [getProduct("kisspeptin10")],
   },
 ];
 
+const supplies: Product[] = [
+  getProduct("alcoholwipes"),
+  getProduct("reconstitutionneedles"),
+  getProduct("syringes10pack"),
+];
+
+function formatPrice(price: number) {
+  return `$${price.toFixed(2)}`;
+}
+
 export default function ProductsPage() {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
+
+  function saveCart(updatedCart: CartItem[]) {
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  }
+
+  function addToCart(product: Product) {
+    const existingItem = cart.find((item) => item.id === product.id);
+
+    let updatedCart: CartItem[];
+
+    if (existingItem) {
+      updatedCart = cart.map((item) =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    } else {
+      updatedCart = [...cart, { id: product.id, quantity: 1 }];
+    }
+
+    saveCart(updatedCart);
+  }
+
+  function removeFromCart(productId: string) {
+    saveCart(cart.filter((item) => item.id !== productId));
+  }
+
+  function decreaseQuantity(productId: string) {
+    const updatedCart = cart
+      .map((item) =>
+        item.id === productId
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+      .filter((item) => item.quantity > 0);
+
+    saveCart(updatedCart);
+  }
+
+  function increaseQuantity(productId: string) {
+    const updatedCart = cart.map((item) =>
+      item.id === productId
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+
+    saveCart(updatedCart);
+  }
+
+  const cartProducts = cart
+    .map((item) => {
+      const product = PRODUCTS.find((p) => p.id === item.id);
+
+      if (!product) return null;
+
+      return {
+        ...product,
+        quantity: item.quantity,
+      };
+    })
+    .filter(Boolean) as Array<Product & { quantity: number }>;
+
+  const cartTotal = cartProducts.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+
+  const checkout = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart }),
+      });
+
+      const text = await response.text();
+
+      console.log("Checkout response:", text);
+
+      let data;
+
+      try {
+        data = JSON.parse(text);
+      } catch {
+        alert(text);
+        return;
+      }
+
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+
+      alert(data.error || "Checkout failed. Please try again.");
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Checkout failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#fff5fa] text-[#06395c]">
-      <header className="flex items-center justify-between border-b bg-white px-4 py-4 md:px-10">
+      <header className="sticky top-0 z-50 flex items-center justify-between border-b bg-white px-4 py-4 md:px-10">
         <div className="flex items-center gap-3">
           <img
             src="/peptide-chix-logo.png"
@@ -153,12 +256,21 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        <nav className="hidden gap-8 text-sm font-medium md:flex">
-          <a href="/">Home</a>
-          <a href="/products">Products & Pricing</a>
-          <a href="/#education">Education</a>
-          <a href="/#contact">Contact</a>
-        </nav>
+        <div className="flex items-center gap-4">
+          <nav className="hidden gap-8 text-sm font-medium md:flex">
+            <a href="/">Home</a>
+            <a href="/products">Products & Pricing</a>
+            <a href="/#education">Education</a>
+            <a href="/#contact">Contact</a>
+          </nav>
+
+          <a
+            href="#cart"
+            className="rounded-md bg-[#ec4aa3] px-4 py-3 text-sm font-semibold text-white"
+          >
+            Cart ({cartItemCount})
+          </a>
+        </div>
       </header>
 
       <section className="relative">
@@ -187,106 +299,122 @@ export default function ProductsPage() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-700">
-            Choose the shopping category that best fits your needs. Each button
-            opens a secure Stripe checkout where customers can select products,
-            quantities, and supplies.
+            Browse the catalog, add products to your cart, and review your order
+            before checkout.
           </p>
+        </div>
+      </section>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <a
-              href={glpShopLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-[#ec4aa3] px-8 py-5 font-semibold text-white shadow-lg transition hover:opacity-90"
-            >
-              SHOP GLP PRODUCTS
-            </a>
+      <section id="cart" className="mx-auto mt-12 max-w-5xl px-6 md:px-10">
+        <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
+          <h2 className="text-3xl font-light">YOUR CART</h2>
 
-            <a
-              href={wellnessShopLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-[#06395c] px-8 py-5 font-semibold text-white shadow-lg transition hover:opacity-90"
-            >
-              SHOP WELLNESS PEPTIDES
-            </a>
-          </div>
+          {cartProducts.length === 0 ? (
+            <p className="mt-4 text-gray-600">Your cart is empty.</p>
+          ) : (
+            <div className="mt-8 space-y-5">
+              {cartProducts.map((item) => (
+                <div
+                  key={item.id}
+                  className="grid gap-4 border-b border-gray-100 pb-5 md:grid-cols-[1fr_auto_auto]"
+                >
+                  <div>
+                    <p className="font-bold uppercase tracking-[0.08em]">
+                      {item.name}
+                    </p>
+
+                    <p className="mt-1 text-sm text-gray-600">
+                      {formatPrice(item.price)} each
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => decreaseQuantity(item.id)}
+                      className="rounded-md border px-3 py-1 font-bold"
+                    >
+                      -
+                    </button>
+
+                    <p className="min-w-8 text-center font-semibold">
+                      {item.quantity}
+                    </p>
+
+                    <button
+                      onClick={() => increaseQuantity(item.id)}
+                      className="rounded-md border px-3 py-1 font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <div className="text-right">
+                    <p className="font-bold">
+                      {formatPrice(item.price * item.quantity)}
+                    </p>
+
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="mt-2 text-sm text-[#ec4aa3]"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+
+              <div className="flex justify-between pt-4 text-2xl font-bold">
+                <p>Total</p>
+                <p>{formatPrice(cartTotal)}</p>
+              </div>
+
+              <p className="text-center text-sm text-gray-500">
+                Free US Shipping
+              </p>
+
+              <button
+                onClick={checkout}
+                disabled={loading}
+                className="mt-6 w-full rounded-md bg-[#06395c] px-8 py-4 font-semibold text-white disabled:opacity-60"
+              >
+                {loading ? "Redirecting..." : "Checkout"}
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
         <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
-                Category 01
-              </p>
-              <h2 className="mt-3 text-3xl font-light md:text-5xl">
-                GLP Weight Loss Products
-              </h2>
-              <p className="mt-4 max-w-3xl text-gray-700">
-                GLP-focused peptide products for weight management and metabolic
-                support.
-              </p>
-            </div>
-
-            <a
-              href={glpShopLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md bg-[#ec4aa3] px-8 py-4 text-center font-semibold text-white transition hover:opacity-90"
-            >
-              SHOP GLP PRODUCTS
-            </a>
+          <div>
+            <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
+              Category 01
+            </p>
+            <h2 className="mt-3 text-3xl font-light md:text-5xl">
+              GLP Weight Loss Products
+            </h2>
           </div>
 
           <div className="mt-10 space-y-7">
             {glpProducts.map((product) => (
-              <div
-                key={product.name}
-                className="grid gap-3 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]"
-              >
-                <div>
-                  <h3 className="text-xl font-bold uppercase tracking-[0.12em]">
-                    {product.name}
-                  </h3>
-                  <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
-                    {product.desc}
-                  </p>
-                </div>
-
-                <p className="text-2xl font-bold text-[#06395c]">
-                  {product.price}
-                </p>
-              </div>
+              <ProductRow
+                key={product.id}
+                product={product}
+                onAdd={() => addToCart(product)}
+                pink
+              />
             ))}
           </div>
         </div>
 
         <div className="mt-14 rounded-2xl bg-white p-6 shadow-lg md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
-                Category 02
-              </p>
-              <h2 className="mt-3 text-3xl font-light md:text-5xl">
-                Wellness & Performance Peptides
-              </h2>
-              <p className="mt-4 max-w-3xl text-gray-700">
-                Recovery, longevity, cognitive, aesthetic, gut health, and
-                wellness peptide options.
-              </p>
-            </div>
+          <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
+            Category 02
+          </p>
 
-            <a
-              href={wellnessShopLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md bg-[#06395c] px-8 py-4 text-center font-semibold text-white transition hover:opacity-90"
-            >
-              SHOP WELLNESS PEPTIDES
-            </a>
-          </div>
+          <h2 className="mt-3 text-3xl font-light md:text-5xl">
+            Wellness & Performance Peptides
+          </h2>
 
           <div className="mt-10 space-y-12">
             {wellnessSections.map((section) => (
@@ -297,24 +425,11 @@ export default function ProductsPage() {
 
                 <div className="mt-8 space-y-7">
                   {section.products.map((product) => (
-                    <div
-                      key={product.name}
-                      className="grid gap-3 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]"
-                    >
-                      <div>
-                        <h4 className="text-xl font-bold uppercase tracking-[0.12em]">
-                          {product.name}
-                        </h4>
-
-                        <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
-                          {product.desc}
-                        </p>
-                      </div>
-
-                      <p className="text-2xl font-bold text-[#06395c]">
-                        {product.price}
-                      </p>
-                    </div>
+                    <ProductRow
+                      key={product.id}
+                      product={product}
+                      onAdd={() => addToCart(product)}
+                    />
                   ))}
                 </div>
               </div>
@@ -322,43 +437,37 @@ export default function ProductsPage() {
           </div>
         </div>
 
+        <div className="mt-14 rounded-2xl bg-white p-6 shadow-lg md:p-10">
+          <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">Supplies</p>
+
+          <h2 className="mt-3 text-3xl font-light md:text-5xl">
+            Add-On Supplies
+          </h2>
+
+          <div className="mt-10 space-y-7">
+            {supplies.map((product) => (
+              <ProductRow
+                key={product.id}
+                product={product}
+                onAdd={() => addToCart(product)}
+                pink
+              />
+            ))}
+          </div>
+        </div>
+
         <div className="mt-16 rounded-2xl bg-white px-6 py-12 text-center shadow-lg">
           <p className="text-2xl font-semibold tracking-[0.12em]">
-            READY TO ORDER?
+            QUESTIONS BEFORE ORDERING?
           </p>
 
-          <p className="mx-auto mt-3 max-w-2xl text-lg text-gray-600">
-            Choose the category that best matches your order. Stripe will handle
-            secure checkout, customer information, and order details.
+          <p className="mt-3 text-lg text-gray-600">
+            Contact The Peptide Chix for product questions or ordering support.
           </p>
 
-          <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <a
-              href={glpShopLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md bg-[#ec4aa3] px-10 py-4 font-semibold text-white transition hover:opacity-90"
-            >
-              SHOP GLP PRODUCTS
-            </a>
-
-            <a
-              href={wellnessShopLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-md bg-[#06395c] px-10 py-4 font-semibold text-white transition hover:opacity-90"
-            >
-              SHOP WELLNESS PEPTIDES
-            </a>
-          </div>
-
-          <div className="mt-8">
-            <p className="text-xl font-semibold">Questions?</p>
-
-            <p className="mt-2 text-2xl font-bold text-[#ec4aa3]">
-              (801) 900-3711
-            </p>
-          </div>
+          <p className="mt-6 text-2xl font-bold text-[#ec4aa3]">
+            (801) 900-3711
+          </p>
 
           <a
             href="/"
@@ -369,5 +478,44 @@ export default function ProductsPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+function ProductRow({
+  product,
+  onAdd,
+  pink = false,
+}: {
+  product: Product;
+  onAdd: () => void;
+  pink?: boolean;
+}) {
+  return (
+    <div className="grid gap-4 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]">
+      <div>
+        <h3 className="text-xl font-bold uppercase tracking-[0.12em]">
+          {product.name}
+        </h3>
+
+        <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
+          {descriptions[product.id]}
+        </p>
+      </div>
+
+      <div className="text-left md:text-right">
+        <p className="text-2xl font-bold text-[#06395c]">
+          {formatPrice(product.price)}
+        </p>
+
+        <button
+          onClick={onAdd}
+          className={`mt-3 rounded-md px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90 ${
+            pink ? "bg-[#ec4aa3]" : "bg-[#06395c]"
+          }`}
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
   );
 }
