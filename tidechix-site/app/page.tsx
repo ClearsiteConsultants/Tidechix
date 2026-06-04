@@ -152,11 +152,25 @@ export default function Home() {
             CONTACT THE PEPTIDE CHIX
           </h2>
 
-          <p className="mt-8 text-2xl font-semibold">(385) 269-9260</p>
+<p className="mt-8 text-2xl font-semibold">
+  📞{" "}
+  <a
+    href="tel:+13852699260"
+    className="hover:text-[#ec4aa3] hover:underline"
+  >
+    (385) 269-9260
+  </a>
+</p>
 
-          <p className="mt-3 text-xl font-medium text-[#ec4aa3]">
-            thetidechix@gmail.com
-          </p>
+<p className="mt-3 text-xl font-medium">
+  ✉{" "}
+  <a
+    href="mailto:thetidechix@gmail.com"
+    className="text-[#ec4aa3] hover:underline"
+  >
+    thetidechix@gmail.com
+  </a>
+</p>
 
           <p className="mt-4 text-lg text-gray-300">
             Premium peptide products shipped throughout the United States.
