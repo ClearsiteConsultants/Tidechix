@@ -20,9 +20,7 @@ const descriptions: Record<string, string> = {
   retatrutide30: "GLP support for weight management goals.",
   cagrilintide5:
     "Amylin pathway support associated with appetite regulation and weight management goals.",
-  aod9604:
-    "Weight management support associated with fat metabolism research.",
-
+  aod9604: "Weight management support associated with fat metabolism research.",
   hulkstack10:
     "Growth hormone pathway support for recovery, sleep quality, body composition, and performance.",
   sermorelin5:
@@ -31,35 +29,31 @@ const descriptions: Record<string, string> = {
     "Supports natural growth hormone signaling and metabolic support.",
   wolverine10:
     "BPC-157 + TB-500. Comprehensive recovery and soft tissue support.",
-
   ghkcu50:
     "Supports collagen health, skin texture, wound recovery, and hair wellness.",
-  melanotan1: "Associated with skin tanning and secondary libido effects.",
+  melanotan1: "Associated with skin tanning and pigmentation support.",
   glowstack70:
     "BPC-157 + TB-500 + GHK-CU. Skin, collagen, and tissue wellness support.",
   klowstack80:
     "BPC-157 + TB-500 + GHK-CU + KPV. Combined recovery, gut, inflammatory, and aesthetic support.",
-
   semax10: "Supports focus, memory, mental clarity, and cognitive performance.",
   selank10: "Associated with calm focus, mood balance, and stress resilience.",
   dsip10: "Supports sleep quality and nervous system recovery.",
   motsc10:
-    "Investigational mitochondrial peptide associated with metabolic efficiency and energy production.",
+    "Mitochondrial peptide associated with metabolic efficiency and energy production.",
   nad1000:
     "Supports mitochondrial energy production, cognitive performance, and cellular health.",
   ss31:
-    "Investigational mitochondrial support compound associated with cellular energy and longevity research.",
-
+    "Mitochondrial support compound associated with cellular energy and longevity research.",
   kpv10: "Associated with gastrointestinal inflammatory support.",
   glutathione1500: "Supports detoxification and immune wellness.",
   vip10:
     "Wellness support associated with inflammation, immune, gut, and nervous system balance.",
-
   kisspeptin10:
     "Supports libido, hormone communication, and reproductive wellness.",
   pt141:
     "Sexual wellness support associated with libido, arousal, and intimacy.",
-
+  bacwater10: "Bacteriostatic water 10ML.",
   alcoholwipes: "Box of 100 alcohol wipes.",
   reconstitutionneedles: "Reconstitution needles. $2.00 per needle.",
   syringes10pack: "10-pack of insulin unit syringes.",
@@ -112,15 +106,15 @@ const wellnessSections: ProductSection[] = [
     ],
   },
   {
-  title: "Gut Health & Inflammatory Support",
-  products: [
-    getProduct("cagrilintide5"),
-    getProduct("aod9604"),
-    getProduct("vip10"),
-    getProduct("glutathione"),
-    getProduct("kpv"),
-  ],
-},
+    title: "Gut Health & Inflammatory Support",
+    products: [
+      getProduct("cagrilintide5"),
+      getProduct("aod9604"),
+      getProduct("vip10"),
+      getProduct("glutathione1500"),
+      getProduct("kpv10"),
+    ],
+  },
   {
     title: "Sexual Wellness & Intimacy Support",
     products: [getProduct("kisspeptin10"), getProduct("pt141")],
@@ -160,19 +154,17 @@ export default function ProductsPage() {
   function addToCart(product: Product) {
     const existingItem = cart.find((item) => item.id === product.id);
 
-    let updatedCart: CartItem[];
-
     if (existingItem) {
-      updatedCart = cart.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+      saveCart(
+        cart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
       );
     } else {
-      updatedCart = [...cart, { id: product.id, quantity: 1 }];
+      saveCart([...cart, { id: product.id, quantity: 1 }]);
     }
-
-    saveCart(updatedCart);
   }
 
   function removeFromCart(productId: string) {
@@ -180,25 +172,25 @@ export default function ProductsPage() {
   }
 
   function decreaseQuantity(productId: string) {
-    const updatedCart = cart
-      .map((item) =>
-        item.id === productId
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-      .filter((item) => item.quantity > 0);
-
-    saveCart(updatedCart);
+    saveCart(
+      cart
+        .map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   }
 
   function increaseQuantity(productId: string) {
-    const updatedCart = cart.map((item) =>
-      item.id === productId
-        ? { ...item, quantity: item.quantity + 1 }
-        : item
+    saveCart(
+      cart.map((item) =>
+        item.id === productId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
     );
-
-    saveCart(updatedCart);
   }
 
   const cartProducts = cart
@@ -238,8 +230,6 @@ export default function ProductsPage() {
       });
 
       const text = await response.text();
-      console.log("Checkout response:", text);
-
       let data;
 
       try {
@@ -323,7 +313,7 @@ export default function ProductsPage() {
             </p>
 
             <h1 className="mt-5 text-4xl font-light md:text-6xl">
-              PRODUCTS & PRICING
+              Products & Pricing
             </h1>
 
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-700">
@@ -335,7 +325,7 @@ export default function ProductsPage() {
 
         <section id="cart" className="mx-auto mt-12 max-w-5xl px-6 md:px-10">
           <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
-            <h2 className="text-3xl font-light">YOUR CART</h2>
+            <h2 className="text-3xl font-light">Your Cart</h2>
 
             {cartProducts.length === 0 ? (
               <p className="mt-4 text-gray-600">Your cart is empty.</p>
@@ -397,7 +387,7 @@ export default function ProductsPage() {
                 </div>
 
                 <p className="text-center text-sm text-gray-500">
-                  Free US Shipping
+                  Local pickup and US shipping options available at checkout.
                 </p>
 
                 <div className="mt-6 space-y-4 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
@@ -425,25 +415,31 @@ export default function ProductsPage() {
                       onChange={(e) => setAgreedToTerms(e.target.checked)}
                       className="mt-1"
                     />
-                 <span>
-                  I have read and agree to the{" "}
-                  <a href="/terms" className="text-[#ec4aa3] underline">
-                  Terms & Conditions
-                 </a>
-                  ,{" "}
-                 <a href="/privacy" className="text-[#ec4aa3] underline">
-                 Privacy Policy
-                </a>
-                ,{" "}
-                <a href="/refund-policy" className="text-[#ec4aa3] underline">
-                  Refund Policy
-                 </a>
-                 , and{" "}
-                 <a href="/shipping-policy" className="text-[#ec4aa3] underline">
-                 Shipping Policy
-                </a>
-                .
-                </span>
+                    <span>
+                      I have read and agree to the{" "}
+                      <a href="/terms" className="text-[#ec4aa3] underline">
+                        Terms & Conditions
+                      </a>
+                      ,{" "}
+                      <a href="/privacy" className="text-[#ec4aa3] underline">
+                        Privacy Policy
+                      </a>
+                      ,{" "}
+                      <a
+                        href="/refund-policy"
+                        className="text-[#ec4aa3] underline"
+                      >
+                        Refund Policy
+                      </a>
+                      , and{" "}
+                      <a
+                        href="/shipping-policy"
+                        className="text-[#ec4aa3] underline"
+                      >
+                        Shipping Policy
+                      </a>
+                      .
+                    </span>
                   </label>
                 </div>
 
@@ -462,10 +458,10 @@ export default function ProductsPage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
-        <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
-        <h2 className="text-3xl font-light md:text-5xl">
-        GLP Weight Loss Products
-         </h2>
+          <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
+            <h2 className="text-3xl font-light md:text-5xl">
+              GLP Weight Loss Products
+            </h2>
 
             <div className="mt-10 space-y-7">
               {glpProducts.map((product) => (
@@ -480,7 +476,7 @@ export default function ProductsPage() {
           </div>
 
           <div className="mt-14 rounded-2xl bg-white p-6 shadow-lg md:p-10">
-            <h2 className="mt-3 text-3xl font-light md:text-5xl">
+            <h2 className="text-3xl font-light md:text-5xl">
               Wellness & Performance Peptides
             </h2>
 
@@ -506,11 +502,7 @@ export default function ProductsPage() {
           </div>
 
           <div className="mt-14 rounded-2xl bg-white p-6 shadow-lg md:p-10">
-            <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
-              Supplies
-            </p>
-
-            <h2 className="mt-3 text-3xl font-light md:text-5xl">
+            <h2 className="text-3xl font-light md:text-5xl">
               Add-On Supplies
             </h2>
 
