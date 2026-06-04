@@ -469,8 +469,6 @@ export default function ProductsPage() {
         <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
           <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
             <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
-              Category 01
-            </p>
             <h2 className="mt-3 text-3xl font-light md:text-5xl">
               GLP Weight Loss Products
             </h2>
