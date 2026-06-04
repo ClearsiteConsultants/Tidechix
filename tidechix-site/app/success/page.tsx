@@ -21,13 +21,18 @@ export default function SuccessPage() {
           </p>
 
           <p className="mt-2 text-gray-600">
-            A confirmation email will be sent shortly.
+            A confirmation receipt will be sent shortly.
           </p>
 
           <div className="mt-10 rounded-xl bg-[#f7fbff] p-6">
             <h2 className="text-xl font-semibold text-[#06395c]">
-              Questions?
+              Local Pickup Orders
             </h2>
+
+            <p className="mt-3 text-gray-700">
+              If you selected Local Pickup at checkout, please contact The
+              Peptide Chix to arrange pickup instructions.
+            </p>
 
             <p className="mt-4 text-lg font-medium text-[#06395c]">
               (385) 269-9260
@@ -35,6 +40,17 @@ export default function SuccessPage() {
 
             <p className="mt-2 text-lg text-[#ec4aa3]">
               thetidechix@gmail.com
+            </p>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-gray-200 bg-gray-50 p-6">
+            <h2 className="text-xl font-semibold text-[#06395c]">
+              Questions?
+            </h2>
+
+            <p className="mt-3 text-gray-700">
+              For order questions, shipping updates, or product support, contact
+              us anytime.
             </p>
           </div>
 
