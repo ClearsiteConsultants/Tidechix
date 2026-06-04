@@ -424,31 +424,25 @@ export default function ProductsPage() {
                       onChange={(e) => setAgreedToTerms(e.target.checked)}
                       className="mt-1"
                     />
-                    <span>
-                      I have read and agree to the{" "}
-                      <a href="/terms" className="text-[#ec4aa3] underline">
-                        Terms & Conditions
-                      </a>
-                      ,{" "}
-                      <a href="/privacy" className="text-[#ec4aa3] underline">
-                        Privacy Policy
-                      </a>
-                      ,{" "}
-                      <a
-                        href="/refund-policy"
-                        className="text-[#ec4aa3] underline"
-                      >
-                        Refund Policy
-                      </a>
-                      , and{" "}
-                      <a
-                        href="/shipping-policy"
-                        className="text-[#ec4aa3] underline"
-                      >
-                        Shipping Policy
-                      </a>
-                      .
-                    </span>
+                 <span>
+                  I have read and agree to the{" "}
+                  <a href="/terms" className="text-[#ec4aa3] underline">
+                  Terms & Conditions
+                 </a>
+                  ,{" "}
+                 <a href="/privacy" className="text-[#ec4aa3] underline">
+                 Privacy Policy
+                </a>
+                ,{" "}
+                <a href="/refund-policy" className="text-[#ec4aa3] underline">
+                  Refund Policy
+                 </a>
+                 , and{" "}
+                 <a href="/shipping-policy" className="text-[#ec4aa3] underline">
+                 Shipping Policy
+                </a>
+                .
+                </span>
                   </label>
                 </div>
 
@@ -467,11 +461,10 @@ export default function ProductsPage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-6 py-20 md:px-10">
-          <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
-            <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
-            <h2 className="mt-3 text-3xl font-light md:text-5xl">
-              GLP Weight Loss Products
-            </h2>
+        <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10">
+        <h2 className="text-3xl font-light md:text-5xl">
+        GLP Weight Loss Products
+         </h2>
 
             <div className="mt-10 space-y-7">
               {glpProducts.map((product) => (
@@ -486,10 +479,6 @@ export default function ProductsPage() {
           </div>
 
           <div className="mt-14 rounded-2xl bg-white p-6 shadow-lg md:p-10">
-            <p className="uppercase tracking-[0.3em] text-[#ec4aa3]">
-              Category 02
-            </p>
-
             <h2 className="mt-3 text-3xl font-light md:text-5xl">
               Wellness & Performance Peptides
             </h2>
