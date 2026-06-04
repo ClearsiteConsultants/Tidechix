@@ -178,7 +178,13 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1TeeivKxrgcoq0F7RG8NkUm4",
     category: "Peptides",
   },
-
+{
+  id: "bacwater10",
+  name: "Bacteriostatic Water 10ML",
+  price: 5,
+  stripePriceId: "price_1TejurKxrgcoq0F7rQ9y7Fio
+  category: "Supplies",
+},
   {
     id: "alcoholwipes",
     name: "Alcohol Wipes - Box of 100",

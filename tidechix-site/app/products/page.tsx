@@ -15,7 +15,7 @@ type ProductSection = {
 };
 
 const descriptions: Record<string, string> = {
-  tirzepatide20: "Metabolic and weight management support.",
+  tirzepatide15: "Metabolic and weight management support.",
   retatrutide20: "GLP support for weight management goals.",
   retatrutide30: "GLP support for weight management goals.",
   cagrilintide5:
@@ -76,11 +76,9 @@ function getProduct(id: string) {
 }
 
 const glpProducts: Product[] = [
-  getProduct("tirzepatide20"),
+  getProduct("tirzepatide15"),
   getProduct("retatrutide20"),
   getProduct("retatrutide30"),
-  getProduct("cagrilintide5"),
-  getProduct("aod9604"),
 ];
 
 const wellnessSections: ProductSection[] = [
@@ -114,13 +112,15 @@ const wellnessSections: ProductSection[] = [
     ],
   },
   {
-    title: "Gut Health & Inflammatory Support",
-    products: [
-      getProduct("kpv10"),
-      getProduct("glutathione1500"),
-      getProduct("vip10"),
-    ],
-  },
+  title: "Gut Health & Inflammatory Support",
+  products: [
+    getProduct("cagrilintide5"),
+    getProduct("aod9604"),
+    getProduct("vip"),
+    getProduct("glutathione"),
+    getProduct("kpv"),
+  ],
+},
   {
     title: "Sexual Wellness & Intimacy Support",
     products: [getProduct("kisspeptin10"), getProduct("pt141")],
@@ -128,6 +128,7 @@ const wellnessSections: ProductSection[] = [
 ];
 
 const supplies: Product[] = [
+  getProduct("bacwater10"),
   getProduct("alcoholwipes"),
   getProduct("reconstitutionneedles"),
   getProduct("syringes10pack"),
