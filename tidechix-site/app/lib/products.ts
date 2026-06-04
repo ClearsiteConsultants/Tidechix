@@ -10,8 +10,8 @@ export type Product = {
 
 export const PRODUCTS: Product[] = [
   {
-    id: "tirzepatide20",
-    name: "Tirzepatide 20MG",
+    id: "tirzepatide15",
+    name: "Tirzepatide 15MG",
     price: 60,
     stripePriceId: "price_1TeKHnKxrgcoq0F7w6WbVSev",
     category: "GLP-1",
@@ -182,7 +182,7 @@ export const PRODUCTS: Product[] = [
   id: "bacwater10",
   name: "Bacteriostatic Water 10ML",
   price: 5,
-  stripePriceId: "price_1TejurKxrgcoq0F7rQ9y7Fio
+  stripePriceId: "price_1TejurKxrgcoq0F7rQ9y7Fio",
   category: "Supplies",
 },
   {
