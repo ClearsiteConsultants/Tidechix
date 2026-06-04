@@ -1,5 +1,3 @@
-```tsx
-import Link from "next/link";
 import Footer from "@/app/components/Footer";
 
 export default function SuccessPage() {
@@ -54,4 +52,3 @@ export default function SuccessPage() {
     </>
   );
 }
-```
