@@ -116,7 +116,7 @@ const wellnessSections: ProductSection[] = [
   products: [
     getProduct("cagrilintide5"),
     getProduct("aod9604"),
-    getProduct("vip"),
+    getProduct("vip10"),
     getProduct("glutathione"),
     getProduct("kpv"),
   ],
