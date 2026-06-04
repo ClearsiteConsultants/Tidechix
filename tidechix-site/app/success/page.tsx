@@ -1,10 +1,57 @@
+```tsx
+import Link from "next/link";
+import Footer from "@/app/components/Footer";
+
 export default function SuccessPage() {
   return (
-    <main style={{ padding: "60px", textAlign: "center" }}>
-      <h1>Thank You For Your Order!</h1>
-      <p>
-        Your order has been received and is being processed.
-      </p>
-    </main>
+    <>
+      <main className="min-h-screen bg-[#fff5fa] px-6 py-20">
+        <div className="mx-auto max-w-3xl rounded-2xl bg-white p-10 text-center shadow-lg">
+          <div className="text-6xl">✓</div>
+
+          <h1 className="mt-4 text-4xl font-bold text-[#06395c]">
+            Order Received
+          </h1>
+
+          <p className="mt-6 text-lg text-gray-700">
+            Thank you for your purchase!
+          </p>
+
+          <p className="mt-4 text-gray-600">
+            Your order has been successfully submitted.
+          </p>
+
+          <p className="mt-2 text-gray-600">
+            A confirmation email will be sent shortly.
+          </p>
+
+          <div className="mt-10 rounded-xl bg-[#f7fbff] p-6">
+            <h2 className="text-xl font-semibold text-[#06395c]">
+              Questions?
+            </h2>
+
+            <p className="mt-4 text-lg font-medium text-[#06395c]">
+              (385) 269-9260
+            </p>
+
+            <p className="mt-2 text-lg text-[#ec4aa3]">
+              thetidechix@gmail.com
+            </p>
+          </div>
+
+          <div className="mt-10">
+            <Link
+              href="/products"
+              className="rounded-md bg-[#ec4aa3] px-8 py-4 font-semibold text-white transition hover:opacity-90"
+            >
+              Continue Shopping
+            </Link>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </>
   );
 }
+```

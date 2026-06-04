@@ -9,10 +9,16 @@ export type Product = {
 };
 
 export const PRODUCTS: Product[] = [
-  // GLP-1 Products
   {
-    id: "retatrutide15",
-    name: "Retatrutide 15MG",
+    id: "tirzepatide20",
+    name: "Tirzepatide 20MG",
+    price: 60,
+    stripePriceId: "price_1TeKHnKxrgcoq0F7w6WbVSev",
+    category: "GLP-1",
+  },
+  {
+    id: "retatrutide20",
+    name: "Retatrutide 20MG",
     price: 100,
     stripePriceId: "price_1TeKG9Kxrgcoq0F7v0XfVOYz",
     category: "GLP-1",
@@ -25,14 +31,20 @@ export const PRODUCTS: Product[] = [
     category: "GLP-1",
   },
   {
-    id: "tirzepatide15",
-    name: "Tirzepatide 15MG",
-    price: 60,
-    stripePriceId: "price_1TeKHnKxrgcoq0F7w6WbVSev",
+    id: "cagrilintide5",
+    name: "Cagrilintide 5MG (Cagri)",
+    price: 50,
+    stripePriceId: "price_1TeekVKxrgcoq0F7QYnNtcen",
+    category: "GLP-1",
+  },
+  {
+    id: "aod9604",
+    name: "AOD-9604 5MG",
+    price: 45,
+    stripePriceId: "price_1Teeh7Kxrgcoq0F7Fnk0v3h6",
     category: "GLP-1",
   },
 
-  // Muscle Performance, Strength & Recovery
   {
     id: "hulkstack10",
     name: "CJC-1295 + Ipamorelin 10MG (Hulk Stack)",
@@ -61,8 +73,6 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1TeJmJKxrgcoq0F7K425VkUZ",
     category: "Peptides",
   },
-
-  // Skin, Hair & Aesthetic Wellness
   {
     id: "ghkcu50",
     name: "GHK-CU 50MG",
@@ -79,7 +89,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     id: "glowstack70",
-    name: "Glow Stack 70MG (BPC-154 + TB-500 + GHK-CU)",
+    name: "Glow Stack 70MG (BPC-157 + TB-500 + GHK-CU)",
     price: 100,
     stripePriceId: "price_1TeK2oKxrgcoq0F7K7ZJTZ2z",
     category: "Peptides",
@@ -91,8 +101,6 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1TeK5HKxrgcoq0F7Y2pnxPqQ",
     category: "Peptides",
   },
-
-  // Cognitive Wellness, Mood & Sleep Support
   {
     id: "semax10",
     name: "Semax 10MG",
@@ -135,8 +143,6 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1TeKBmKxrgcoq0F721DUW71J",
     category: "Peptides",
   },
-
-  // Gut Health & Inflammatory Support
   {
     id: "kpv10",
     name: "KPV 10MG",
@@ -151,8 +157,6 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1TeKDQKxrgcoq0F7Pf4sX3eQ",
     category: "Peptides",
   },
-
-  // Sexual Wellness & Intimacy Support
   {
     id: "kisspeptin10",
     name: "Kisspeptin-10",
@@ -160,8 +164,21 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1TeKEeKxrgcoq0F723tKr1ws",
     category: "Peptides",
   },
+  {
+    id: "pt141",
+    name: "PT-141 10MG (Bremelanotide)",
+    price: 45,
+    stripePriceId: "price_1TeemdKxrgcoq0F75nBGfqaV",
+    category: "Peptides",
+  },
+  {
+    id: "vip10",
+    name: "VIP 10MG",
+    price: 60,
+    stripePriceId: "price_1TeeivKxrgcoq0F7RG8NkUm4",
+    category: "Peptides",
+  },
 
-  // Supplies
   {
     id: "alcoholwipes",
     name: "Alcohol Wipes - Box of 100",

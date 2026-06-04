@@ -2,11 +2,14 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { PRODUCTS } from "@/app/lib/products";
 
+type CartItem = {
+  id: string;
+  quantity: number;
+};
+
 export async function POST(req: Request) {
   try {
     const secretKey = process.env.STRIPE_SECRET_KEY;
-
-    console.log("STRIPE KEY LOADED =", secretKey ? "YES" : "NO");
 
     if (!secretKey) {
       return NextResponse.json(
@@ -17,13 +20,23 @@ export async function POST(req: Request) {
 
     const stripe = new Stripe(secretKey);
 
-    const { cart } = await req.json();
+    const { cart, acknowledgedResearchUse, agreedToTerms } = await req.json();
 
     if (!cart || cart.length === 0) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
     }
 
-    const line_items = cart.map((item: { id: string; quantity: number }) => {
+    if (!acknowledgedResearchUse || !agreedToTerms) {
+      return NextResponse.json(
+        {
+          error:
+            "You must accept the required acknowledgements and terms before checkout.",
+        },
+        { status: 400 }
+      );
+    }
+
+    const line_items = cart.map((item: CartItem) => {
       const product = PRODUCTS.find((p) => p.id === item.id);
 
       if (!product) {
@@ -56,6 +69,16 @@ export async function POST(req: Request) {
       ],
       phone_number_collection: {
         enabled: true,
+      },
+      custom_text: {
+        submit: {
+          message:
+            "By submitting this order, you confirm that you are at least 18 years old and agree to The Peptide Chix Terms & Conditions, Privacy Policy, Refund Policy, and Shipping Policy.",
+        },
+      },
+      metadata: {
+        acknowledgedResearchUse: "true",
+        agreedToTerms: "true",
       },
       success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/products#cart`,
