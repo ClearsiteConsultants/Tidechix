@@ -9,6 +9,15 @@ type CartItem = {
   quantity: number;
 };
 
+type InventoryItem = {
+  id: string;
+  name: string;
+  stock: number;
+  active: boolean;
+  threshold: number;
+  status: string;
+};
+
 type ProductSection = {
   title: string;
   products: Product[];
@@ -69,71 +78,13 @@ function getProduct(id: string) {
   return product;
 }
 
-const glpProducts: Product[] = [
-  getProduct("tirzepatide15"),
-  getProduct("retatrutide20"),
-  getProduct("retatrutide30"),
-];
-
-const wellnessSections: ProductSection[] = [
-  {
-    title: "Muscle Performance, Strength & Recovery",
-    products: [
-      getProduct("hulkstack10"),
-      getProduct("sermorelin5"),
-      getProduct("tesamorelin10"),
-      getProduct("wolverine10"),
-    ],
-  },
-  {
-    title: "Skin, Hair & Aesthetic Wellness",
-    products: [
-      getProduct("ghkcu50"),
-      getProduct("melanotan1"),
-      getProduct("glowstack70"),
-      getProduct("klowstack80"),
-    ],
-  },
-  {
-    title: "Cognitive Wellness, Mood & Sleep Support",
-    products: [
-      getProduct("semax10"),
-      getProduct("selank10"),
-      getProduct("dsip10"),
-      getProduct("motsc10"),
-      getProduct("nad1000"),
-      getProduct("ss31"),
-    ],
-  },
-  {
-    title: "Gut Health & Inflammatory Support",
-    products: [
-      getProduct("cagrilintide5"),
-      getProduct("aod9604"),
-      getProduct("vip10"),
-      getProduct("glutathione1500"),
-      getProduct("kpv10"),
-    ],
-  },
-  {
-    title: "Sexual Wellness & Intimacy Support",
-    products: [getProduct("kisspeptin10"), getProduct("pt141")],
-  },
-];
-
-const supplies: Product[] = [
-  getProduct("bacwater10"),
-  getProduct("alcoholwipes"),
-  getProduct("reconstitutionneedles"),
-  getProduct("syringes10pack"),
-];
-
 function formatPrice(price: number) {
   return `$${price.toFixed(2)}`;
 }
 
 export default function ProductsPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [acknowledgedResearchUse, setAcknowledgedResearchUse] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
@@ -144,7 +95,82 @@ export default function ProductsPage() {
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
+
+    fetch("/api/inventory")
+      .then((res) => res.json())
+      .then((data) => setInventory(data))
+      .catch((error) => console.error("Inventory error:", error));
   }, []);
+
+  function getInventory(productId: string) {
+    return inventory.find((item) => item.id === productId);
+  }
+
+  function isActive(product: Product) {
+    const item = getInventory(product.id);
+    return item ? item.active : true;
+  }
+
+  const glpProducts: Product[] = [
+    getProduct("tirzepatide15"),
+    getProduct("retatrutide20"),
+    getProduct("retatrutide30"),
+  ].filter(isActive);
+
+  const wellnessSections: ProductSection[] = [
+    {
+      title: "Muscle Performance, Strength & Recovery",
+      products: [
+        getProduct("hulkstack10"),
+        getProduct("sermorelin5"),
+        getProduct("tesamorelin10"),
+        getProduct("wolverine10"),
+      ].filter(isActive),
+    },
+    {
+      title: "Skin, Hair & Aesthetic Wellness",
+      products: [
+        getProduct("ghkcu50"),
+        getProduct("melanotan1"),
+        getProduct("glowstack70"),
+        getProduct("klowstack80"),
+      ].filter(isActive),
+    },
+    {
+      title: "Cognitive Wellness, Mood & Sleep Support",
+      products: [
+        getProduct("semax10"),
+        getProduct("selank10"),
+        getProduct("dsip10"),
+        getProduct("motsc10"),
+        getProduct("nad1000"),
+        getProduct("ss31"),
+      ].filter(isActive),
+    },
+    {
+      title: "Gut Health & Inflammatory Support",
+      products: [
+        getProduct("cagrilintide5"),
+        getProduct("aod9604"),
+        getProduct("vip10"),
+        getProduct("glutathione1500"),
+        getProduct("kpv10"),
+      ].filter(isActive),
+    },
+    {
+      title: "Sexual Wellness & Intimacy Support",
+      products: [getProduct("kisspeptin10"), getProduct("pt141")].filter(
+        isActive
+      ),
+    },
+  ].filter((section) => section.products.length > 0);
+
+  const supplies: Product[] = [
+    getProduct("bacwater10"),
+    getProduct("alcoholwipes"),
+    getProduct("reconstitutionneedles"),
+    getProduct("syringes10pack"),
+  ].filter(isActive);
 
   function saveCart(updatedCart: CartItem[]) {
     setCart(updatedCart);
@@ -152,7 +178,20 @@ export default function ProductsPage() {
   }
 
   function addToCart(product: Product) {
+    const stockInfo = getInventory(product.id);
+
+    if (stockInfo?.status === "Out of Stock" || stockInfo?.stock === 0) {
+      alert("This product is currently out of stock.");
+      return;
+    }
+
     const existingItem = cart.find((item) => item.id === product.id);
+    const currentQuantity = existingItem?.quantity || 0;
+
+    if (stockInfo && currentQuantity >= stockInfo.stock) {
+      alert(`Only ${stockInfo.stock} available in stock.`);
+      return;
+    }
 
     if (existingItem) {
       saveCart(
@@ -184,6 +223,14 @@ export default function ProductsPage() {
   }
 
   function increaseQuantity(productId: string) {
+    const cartItem = cart.find((item) => item.id === productId);
+    const stockInfo = getInventory(productId);
+
+    if (stockInfo && cartItem && cartItem.quantity >= stockInfo.stock) {
+      alert(`Only ${stockInfo.stock} available in stock.`);
+      return;
+    }
+
     saveCart(
       cart.map((item) =>
         item.id === productId
@@ -468,6 +515,7 @@ export default function ProductsPage() {
                 <ProductRow
                   key={product.id}
                   product={product}
+                  inventory={getInventory(product.id)}
                   onAdd={() => addToCart(product)}
                   pink
                 />
@@ -492,6 +540,7 @@ export default function ProductsPage() {
                       <ProductRow
                         key={product.id}
                         product={product}
+                        inventory={getInventory(product.id)}
                         onAdd={() => addToCart(product)}
                       />
                     ))}
@@ -511,6 +560,7 @@ export default function ProductsPage() {
                 <ProductRow
                   key={product.id}
                   product={product}
+                  inventory={getInventory(product.id)}
                   onAdd={() => addToCart(product)}
                   pink
                 />
@@ -527,13 +577,18 @@ export default function ProductsPage() {
 
 function ProductRow({
   product,
+  inventory,
   onAdd,
   pink = false,
 }: {
   product: Product;
+  inventory?: InventoryItem;
   onAdd: () => void;
   pink?: boolean;
 }) {
+  const isOutOfStock =
+    inventory?.status === "Out of Stock" || inventory?.stock === 0;
+
   return (
     <div className="grid gap-4 border-b border-gray-100 pb-6 md:grid-cols-[1fr_auto]">
       <div>
@@ -544,6 +599,23 @@ function ProductRow({
         <p className="mt-2 max-w-3xl text-sm uppercase tracking-[0.08em] text-gray-600">
           {descriptions[product.id]}
         </p>
+
+        {inventory && (
+          <p
+            className={`mt-2 text-sm font-semibold ${
+              inventory.status === "Out of Stock"
+                ? "text-red-600"
+                : inventory.status === "Low Stock"
+                ? "text-orange-500"
+                : "text-green-600"
+            }`}
+          >
+            {inventory.status === "Out of Stock" && "Out of Stock"}
+            {inventory.status === "Low Stock" &&
+              `Low Stock - ${inventory.stock} left`}
+            {inventory.status === "In Stock" && `In Stock - ${inventory.stock}`}
+          </p>
+        )}
       </div>
 
       <div className="text-left md:text-right">
@@ -553,11 +625,16 @@ function ProductRow({
 
         <button
           onClick={onAdd}
-          className={`mt-3 rounded-md px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90 ${
-            pink ? "bg-[#ec4aa3]" : "bg-[#06395c]"
+          disabled={isOutOfStock}
+          className={`mt-3 rounded-md px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 ${
+            isOutOfStock
+              ? "bg-gray-400"
+              : pink
+              ? "bg-[#ec4aa3]"
+              : "bg-[#06395c]"
           }`}
         >
-          Add to Cart
+          {isOutOfStock ? "Out of Stock" : "Add to Cart"}
         </button>
       </div>
     </div>
