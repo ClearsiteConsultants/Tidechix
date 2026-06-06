@@ -8,7 +8,13 @@ function toNumber(value: any) {
 }
 
 function getItemName(item: any) {
-  return item.name || item.title || item.productName || item.product?.name || "Item";
+  return (
+    item.name ||
+    item.title ||
+    item.productName ||
+    item.product?.name ||
+    "Item"
+  );
 }
 
 function getItemQuantity(item: any) {
@@ -16,7 +22,13 @@ function getItemQuantity(item: any) {
 }
 
 function getItemPrice(item: any) {
-  return toNumber(item.price || item.unitPrice || item.amount || item.product?.price || 0);
+  return toNumber(
+    item.price ||
+      item.unitPrice ||
+      item.amount ||
+      item.product?.price ||
+      0
+  );
 }
 
 export async function POST(request: Request) {
@@ -27,11 +39,17 @@ export async function POST(request: Request) {
     const cart = body.cart || body.items || [];
 
     if (!customer) {
-      return NextResponse.json({ error: "Customer information is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Customer information is required." },
+        { status: 400 }
+      );
     }
 
     if (!cart || cart.length === 0) {
-      return NextResponse.json({ error: "Cart is empty." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Cart is empty." },
+        { status: 400 }
+      );
     }
 
     if (!customer.name || !customer.email || !customer.phone) {
@@ -42,7 +60,10 @@ export async function POST(request: Request) {
     }
 
     if (!customer.paymentMethod) {
-      return NextResponse.json({ error: "Payment method is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Payment method is required." },
+        { status: 400 }
+      );
     }
 
     if (
@@ -52,6 +73,14 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Shipping address is required for shipping orders." },
         { status: 400 }
+      );
+    }
+
+    if (!process.env.RESEND_API_KEY) {
+      console.error("Missing RESEND_API_KEY");
+      return NextResponse.json(
+        { error: "Email service is not configured." },
+        { status: 500 }
       );
     }
 
@@ -71,17 +100,18 @@ export async function POST(request: Request) {
         const name = getItemName(item);
         const quantity = getItemQuantity(item);
         const price = getItemPrice(item);
+
         return `${name} x ${quantity} - $${(price * quantity).toFixed(2)}`;
       })
       .join("\n");
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-const adminEmail = await resend.emails.send({
-  from: "The Tide Chix <onboarding@resend.dev>",
-  to: "thetidechix@gmail.com",
-  subject: `New Tide Chix Order ${orderNumber}`,
-  text: `
+    const adminEmail = await resend.emails.send({
+      from: "The Tide Chix <onboarding@resend.dev>",
+      to: "thetidechix@gmail.com",
+      subject: `New Tide Chix Order ${orderNumber}`,
+      text: `
 NEW ORDER RECEIVED
 
 Order Number:
@@ -119,11 +149,12 @@ Payment must be received before any Venmo or Cash App orders are shipped or avai
 If Cash Pickup was selected, customer should contact The Tide Chix for pickup instructions.
       `,
     });
-console.log("ADMIN EMAIL RESULT:", adminEmail);
 
-await resend.emails.send({
-  from: "The Tide Chix <onboarding@resend.dev>",
-  to: [customer.email, "thetidechix@gmail.com"],
+    console.log("ADMIN EMAIL RESULT:", JSON.stringify(adminEmail, null, 2));
+
+    const customerEmail = await resend.emails.send({
+      from: "The Tide Chix <onboarding@resend.dev>",
+      to: [customer.email, "thetidechix@gmail.com"],
       subject: `Tide Chix Order Confirmation ${orderNumber}`,
       text: `
 Thank you for your order from The Tide Chix!
@@ -169,6 +200,8 @@ Thank you,
 The Tide Chix
       `,
     });
+
+    console.log("CUSTOMER EMAIL RESULT:", JSON.stringify(customerEmail, null, 2));
 
     return NextResponse.json({
       orderNumber,
