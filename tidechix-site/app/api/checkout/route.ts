@@ -78,6 +78,7 @@ export async function POST(request: Request) {
 
     if (!process.env.RESEND_API_KEY) {
       console.error("Missing RESEND_API_KEY");
+
       return NextResponse.json(
         { error: "Email service is not configured." },
         { status: 500 }
@@ -89,6 +90,7 @@ export async function POST(request: Request) {
     const finalSubtotal = cart.reduce((sum: number, item: any) => {
       const price = getItemPrice(item);
       const quantity = getItemQuantity(item);
+
       return sum + price * quantity;
     }, 0);
 
@@ -108,7 +110,7 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const adminEmail = await resend.emails.send({
-      from: "The Tide Chix <onboarding@resend.dev>",
+      from: "The Tide Chix <orders@tidechix.com>",
       to: "thetidechix@gmail.com",
       subject: `New Tide Chix Order ${orderNumber}`,
       text: `
@@ -153,7 +155,7 @@ If Cash Pickup was selected, customer should contact The Tide Chix for pickup in
     console.log("ADMIN EMAIL RESULT:", JSON.stringify(adminEmail, null, 2));
 
     const customerEmail = await resend.emails.send({
-      from: "The Tide Chix <onboarding@resend.dev>",
+      from: "The Tide Chix <orders@tidechix.com>",
       to: [customer.email, "thetidechix@gmail.com"],
       subject: `Tide Chix Order Confirmation ${orderNumber}`,
       text: `
