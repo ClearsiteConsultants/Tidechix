@@ -1,11 +1,20 @@
+import Link from "next/link";
 import Footer from "@/app/components/Footer";
 
 export default function PrivacyPage() {
   return (
     <>
       <main className="min-h-screen bg-[#fff5fa] px-6 py-16 text-[#06395c]">
-        <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
-          <h1 className="text-4xl font-light">Privacy Policy</h1>
+<div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
+
+  <Link
+    href="/"
+    className="inline-flex items-center mb-4 text-[#06395c] hover:text-[#ec4aa3] hover:underline"
+  >
+    ← Return to Home
+  </Link>
+
+  <h1 className="text-4xl font-light">Privacy Policy</h1>
 
           <p className="mt-6 text-gray-700">
             The Peptide Chix respects your privacy and is committed to
@@ -25,10 +34,10 @@ export default function PrivacyPage() {
           </p>
 
           <h2 className="mt-8 text-2xl font-semibold">Payment Processing</h2>
-          <p className="mt-3 text-gray-700">
-            Payments are processed securely through Stripe. The Peptide Chix
-            does not store full credit card information.
-          </p>
+<p className="mt-3 text-gray-700">
+  Payments are processed through approved third-party payment providers.
+  The Peptide Chix does not store banking or payment account information.
+</p>
 
           <h2 className="mt-8 text-2xl font-semibold">Information Sharing</h2>
           <p className="mt-3 text-gray-700">

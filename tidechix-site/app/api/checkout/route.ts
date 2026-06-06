@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import Stripe from "stripe";
+import { Resend } from "resend";
 import { PRODUCTS } from "@/app/lib/products";
 
 type CartItem = {
@@ -9,34 +9,22 @@ type CartItem = {
 
 export async function POST(req: Request) {
   try {
-    const secretKey = process.env.STRIPE_SECRET_KEY;
-
-    if (!secretKey) {
-      return NextResponse.json(
-        { error: "Missing STRIPE_SECRET_KEY in .env.local" },
-        { status: 500 }
-      );
-    }
-
-    const stripe = new Stripe(secretKey);
-
-    const { cart, acknowledgedResearchUse, agreedToTerms } = await req.json();
+    const { cart, customer, subtotal, shippingCost, total } = await req.json();
 
     if (!cart || cart.length === 0) {
       return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
     }
 
-    if (!acknowledgedResearchUse || !agreedToTerms) {
+    if (!customer?.name || !customer?.email || !customer?.phone) {
       return NextResponse.json(
-        {
-          error:
-            "You must accept the required acknowledgements and terms before checkout.",
-        },
+        { error: "Missing customer information" },
         { status: 400 }
       );
     }
 
-    const line_items = cart.map((item: CartItem) => {
+    const orderNumber = `TC-${Date.now()}`;
+
+    const cartProducts = cart.map((item: CartItem) => {
       const product = PRODUCTS.find((p) => p.id === item.id);
 
       if (!product) {
@@ -44,88 +32,91 @@ export async function POST(req: Request) {
       }
 
       return {
-        price: product.stripePriceId,
+        name: product.name,
+        price: product.price,
         quantity: item.quantity,
+        subtotal: product.price * item.quantity,
       };
     });
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      line_items,
-      shipping_address_collection: {
-        allowed_countries: ["US"],
-      },
-      shipping_options: [
-        {
-          shipping_rate_data: {
-            type: "fixed_amount",
-            fixed_amount: {
-              amount: 0,
-              currency: "usd",
-            },
-            display_name: "Local Pickup",
-            delivery_estimate: {
-              minimum: {
-                unit: "business_day",
-                value: 1,
-              },
-              maximum: {
-                unit: "business_day",
-                value: 2,
-              },
-            },
-          },
-        },
-        {
-          shipping_rate_data: {
-            type: "fixed_amount",
-            fixed_amount: {
-              amount: 1000,
-              currency: "usd",
-            },
-            display_name: "US Shipping",
-            delivery_estimate: {
-              minimum: {
-                unit: "business_day",
-                value: 3,
-              },
-              maximum: {
-                unit: "business_day",
-                value: 7,
-              },
-            },
-          },
-        },
-      ],
-      phone_number_collection: {
-        enabled: true,
-      },
-      custom_text: {
-        submit: {
-          message:
-            "By submitting this order, you confirm that you are at least 18 years old and agree to The Peptide Chix Terms & Conditions, Privacy Policy, Refund Policy, and Shipping Policy.",
-        },
-        shipping_address: {
-          message:
-            "Select Local Pickup for free pickup or US Shipping for delivery. Local Pickup customers should contact The Peptide Chix at (385) 269-9260 or thetidechix@gmail.com after ordering to arrange pickup instructions. Shipping orders require a valid US shipping address.",
-        },
-      },
-      metadata: {
-        acknowledgedResearchUse: "true",
-        agreedToTerms: "true",
-      },
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/success`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/products#cart`,
+    const calculatedSubtotal = cartProducts.reduce(
+      (sum, item) => sum + item.subtotal,
+      0
+    );
+
+    const finalSubtotal =
+      typeof subtotal === "number" ? subtotal : calculatedSubtotal;
+
+    const finalShippingCost =
+      typeof shippingCost === "number"
+        ? shippingCost
+        : customer.deliveryMethod === "Shipping"
+        ? 10
+        : 0;
+
+    const finalTotal =
+      typeof total === "number" ? total : finalSubtotal + finalShippingCost;
+
+    const itemsText = cartProducts
+      .map(
+        (item) =>
+          `${item.quantity} x ${item.name} — $${item.price.toFixed(
+            2
+          )} each — $${item.subtotal.toFixed(2)}`
+      )
+      .join("\n");
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
+
+    await resend.emails.send({
+      from: "The Tide Chix <onboarding@resend.dev>",
+      to: "thetidechix@gmail.com",
+      subject: `New Tide Chix Order ${orderNumber}`,
+      text: `
+NEW ORDER RECEIVED
+
+Order Number:
+${orderNumber}
+
+CUSTOMER INFORMATION
+Name: ${customer.name}
+Email: ${customer.email}
+Phone: ${customer.phone}
+
+DELIVERY METHOD
+${customer.deliveryMethod}
+
+SHIPPING ADDRESS
+${customer.address || ""}
+${customer.city || ""}, ${customer.state || ""} ${customer.zip || ""}
+
+PAYMENT METHOD
+${customer.paymentMethod}
+
+ITEMS ORDERED
+${itemsText}
+
+ORDER TOTALS
+Subtotal: $${finalSubtotal.toFixed(2)}
+Shipping: $${finalShippingCost.toFixed(2)}
+Total: $${finalTotal.toFixed(2)}
+
+CUSTOMER NOTES
+${customer.notes || "None"}
+
+IMPORTANT
+Payment must be received before any Venmo or Zelle orders are shipped or available for pickup.
+
+If Cash Pickup was selected, customer should contact The Tide Chix for pickup instructions.
+      `,
     });
 
-    return NextResponse.json({ url: session.url });
+    return NextResponse.json({ orderNumber });
   } catch (error: any) {
-    console.error("Stripe checkout error:", error);
+    console.error("Order error:", error);
 
     return NextResponse.json(
-      {
-        error: error.message || "Unable to create checkout session",
-      },
+      { error: error.message || "Unable to submit order" },
       { status: 500 }
     );
   }

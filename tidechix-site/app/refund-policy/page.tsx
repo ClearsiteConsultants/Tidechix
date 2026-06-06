@@ -1,11 +1,20 @@
+import Link from "next/link";
 import Footer from "@/app/components/Footer";
 
 export default function RefundPolicyPage() {
   return (
     <>
       <main className="min-h-screen bg-[#fff5fa] px-6 py-16 text-[#06395c]">
-        <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
-          <h1 className="text-4xl font-light">Refund Policy</h1>
+       <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
+
+  <Link
+    href="/"
+    className="inline-flex items-center mb-4 text-[#06395c] hover:text-[#ec4aa3] hover:underline"
+  >
+    ← Return to Home
+  </Link>
+
+  <h1 className="text-4xl font-light">Refund Policy</h1>
 
           <p className="mt-6 text-gray-700">
             Due to the nature of our products, all sales are final once an order

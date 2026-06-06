@@ -85,9 +85,6 @@ function formatPrice(price: number) {
 export default function ProductsPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [acknowledgedResearchUse, setAcknowledgedResearchUse] = useState(false);
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
@@ -260,46 +257,6 @@ export default function ProductsPage() {
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-  const checkout = async () => {
-    try {
-      setLoading(true);
-
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          cart,
-          acknowledgedResearchUse,
-          agreedToTerms,
-        }),
-      });
-
-      const text = await response.text();
-      let data;
-
-      try {
-        data = JSON.parse(text);
-      } catch {
-        alert(text);
-        return;
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
-        return;
-      }
-
-      alert(data.error || "Checkout failed. Please try again.");
-    } catch (error) {
-      console.error("Checkout error:", error);
-      alert("Checkout failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <>
       <main className="min-h-screen bg-[#fff5fa] text-[#06395c]">
@@ -365,7 +322,7 @@ export default function ProductsPage() {
 
             <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-gray-700">
               Browse the catalog, add products to your cart, and review your
-              order before checkout.
+              order before placing your order.
             </p>
           </div>
         </section>
@@ -434,71 +391,21 @@ export default function ProductsPage() {
                 </div>
 
                 <p className="text-center text-sm text-gray-500">
-                  Local pickup and US shipping options available at checkout.
+                  Cash is accepted for local pickup only.
                 </p>
 
-                <div className="mt-6 space-y-4 rounded-xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700">
-                  <label className="flex gap-3">
-                    <input
-                      type="checkbox"
-                      checked={acknowledgedResearchUse}
-                      onChange={(e) =>
-                        setAcknowledgedResearchUse(e.target.checked)
-                      }
-                      className="mt-1"
-                    />
-                    <span>
-                      I certify that I am at least 18 years old and acknowledge
-                      that these products are for research use only, not for
-                      human or animal consumption, and are not intended to
-                      diagnose, treat, cure, or prevent any disease.
-                    </span>
-                  </label>
+                <p className="rounded-xl bg-[#fff5fa] p-4 text-sm text-[#06395c]">
+                  Payment is due before any orders are shipped, fulfilled, or
+                  available for pickup. Please complete your order on the cart
+                  page to receive Venmo, Zelle, or cash pickup instructions.
+                </p>
 
-                  <label className="flex gap-3">
-                    <input
-                      type="checkbox"
-                      checked={agreedToTerms}
-                      onChange={(e) => setAgreedToTerms(e.target.checked)}
-                      className="mt-1"
-                    />
-                    <span>
-                      I have read and agree to the{" "}
-                      <a href="/terms" className="text-[#ec4aa3] underline">
-                        Terms & Conditions
-                      </a>
-                      ,{" "}
-                      <a href="/privacy" className="text-[#ec4aa3] underline">
-                        Privacy Policy
-                      </a>
-                      ,{" "}
-                      <a
-                        href="/refund-policy"
-                        className="text-[#ec4aa3] underline"
-                      >
-                        Refund Policy
-                      </a>
-                      , and{" "}
-                      <a
-                        href="/shipping-policy"
-                        className="text-[#ec4aa3] underline"
-                      >
-                        Shipping Policy
-                      </a>
-                      .
-                    </span>
-                  </label>
-                </div>
-
-                <button
-                  onClick={checkout}
-                  disabled={
-                    loading || !acknowledgedResearchUse || !agreedToTerms
-                  }
-                  className="mt-6 w-full rounded-md bg-[#06395c] px-8 py-4 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50"
+                <a
+                  href="/cart"
+                  className="mt-6 block w-full rounded-md bg-[#06395c] px-8 py-4 text-center font-semibold text-white"
                 >
-                  {loading ? "Redirecting..." : "Checkout"}
-                </button>
+                  Go to Cart
+                </a>
               </div>
             )}
           </div>

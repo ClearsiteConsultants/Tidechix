@@ -1,11 +1,20 @@
+import Link from "next/link";
 import Footer from "@/app/components/Footer";
 
 export default function ShippingPolicyPage() {
   return (
     <>
       <main className="min-h-screen bg-[#fff5fa] px-6 py-16 text-[#06395c]">
-        <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
-          <h1 className="text-4xl font-light">Shipping Policy</h1>
+      <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-lg">
+
+  <Link
+    href="/"
+    className="inline-flex items-center mb-4 text-[#06395c] hover:text-[#ec4aa3] hover:underline"
+  >
+    ← Return to Home
+  </Link>
+
+  <h1 className="text-4xl font-light">Shipping Policy</h1>
 
           <p className="mt-6 text-gray-700">
             The Peptide Chix currently offers free shipping within the United
