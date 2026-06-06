@@ -174,34 +174,41 @@ export default function ProductsPage() {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   }
 
-  function addToCart(product: Product) {
-    const stockInfo = getInventory(product.id);
+function addToCart(product: Product) {
+  const stockInfo = getInventory(product.id);
 
-    if (stockInfo?.status === "Out of Stock" || stockInfo?.stock === 0) {
-      alert("This product is currently out of stock.");
-      return;
-    }
-
-    const existingItem = cart.find((item) => item.id === product.id);
-    const currentQuantity = existingItem?.quantity || 0;
-
-    if (stockInfo && currentQuantity >= stockInfo.stock) {
-      alert(`Only ${stockInfo.stock} available in stock.`);
-      return;
-    }
-
-    if (existingItem) {
-      saveCart(
-        cart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      saveCart([...cart, { id: product.id, quantity: 1 }]);
-    }
+  if (stockInfo?.status === "Out of Stock" || stockInfo?.stock === 0) {
+    alert("This product is currently out of stock.");
+    return;
   }
+
+  const existingItem = cart.find((item) => item.id === product.id);
+  const currentQuantity = existingItem?.quantity || 0;
+
+  if (stockInfo && currentQuantity >= stockInfo.stock) {
+    alert(`Only ${stockInfo.stock} available in stock.`);
+    return;
+  }
+
+  if (existingItem) {
+    saveCart(
+      cart.map((item) =>
+        item.id === product.id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    );
+  } else {
+    saveCart([...cart, { id: product.id, quantity: 1 }]);
+  }
+
+  setTimeout(() => {
+    document.getElementById("cart")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, 100);
+}
 
   function removeFromCart(productId: string) {
     saveCart(cart.filter((item) => item.id !== productId));
