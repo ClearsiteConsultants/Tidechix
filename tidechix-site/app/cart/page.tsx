@@ -136,7 +136,12 @@ export default function CartPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          cart,
+          cart: cartProducts.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
           customer,
           subtotal,
           shippingCost,
@@ -284,24 +289,12 @@ export default function CartPage() {
             ))}
 
             <div style={{ marginTop: "35px", color: "#073b5c" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "8px",
-                }}
-              >
+              <div style={rowStyle}>
                 <span>Subtotal</span>
                 <strong>${subtotal.toFixed(2)}</strong>
               </div>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "8px",
-                }}
-              >
+              <div style={rowStyle}>
                 <span>
                   {customer.deliveryMethod === "Shipping"
                     ? "Shipping"
@@ -330,16 +323,7 @@ export default function CartPage() {
               </div>
             </div>
 
-            <div
-              style={{
-                marginTop: "20px",
-                padding: "18px",
-                borderRadius: "12px",
-                background: "#fff5fa",
-                color: "#073b5c",
-                lineHeight: "1.6",
-              }}
-            >
+            <div style={noticeStyle}>
               <strong>Payment Notice:</strong>
 
               {customer.paymentMethod === "Cash Pickup" ? (
@@ -351,24 +335,19 @@ export default function CartPage() {
                 <p style={{ margin: "8px 0 0" }}>
                   Payment must be received before your order is shipped or
                   available for pickup. Please include your order number in the
-                  Venmo or Zelle payment memo.
+                  Venmo or Cash App payment memo.
                 </p>
               )}
             </div>
 
-            <div
-              style={{
-                marginTop: "35px",
-                display: "grid",
-                gap: "14px",
-              }}
-            >
+            <div style={{ marginTop: "35px", display: "grid", gap: "14px" }}>
               <h2 style={{ color: "#073b5c", marginBottom: "5px" }}>
                 Customer Information
               </h2>
 
               <input
-                placeholder="Name"
+                required
+                placeholder="Name *"
                 value={customer.name}
                 onChange={(e) =>
                   setCustomer({ ...customer, name: e.target.value })
@@ -377,7 +356,9 @@ export default function CartPage() {
               />
 
               <input
-                placeholder="Email"
+                required
+                type="email"
+                placeholder="Email *"
                 value={customer.email}
                 onChange={(e) =>
                   setCustomer({ ...customer, email: e.target.value })
@@ -386,7 +367,8 @@ export default function CartPage() {
               />
 
               <input
-                placeholder="Phone"
+                required
+                placeholder="Phone *"
                 value={customer.phone}
                 onChange={(e) =>
                   setCustomer({ ...customer, phone: e.target.value })
@@ -419,7 +401,7 @@ export default function CartPage() {
                 style={inputStyle}
               >
                 <option value="Venmo">Venmo</option>
-                <option value="Zelle">Zelle</option>
+                <option value="Cash App">Cash App</option>
                 {customer.deliveryMethod === "Local Pickup" && (
                   <option value="Cash Pickup">Cash Pickup</option>
                 )}
@@ -484,41 +466,31 @@ export default function CartPage() {
               />
             </div>
 
-            <div
-              style={{
-                marginTop: "25px",
-                padding: "18px",
-                borderRadius: "12px",
-                background: "#f8fafc",
-                color: "#073b5c",
-                display: "grid",
-                gap: "14px",
-                fontSize: "14px",
-                lineHeight: "1.6",
-              }}
-            >
+            <div style={acknowledgementBoxStyle}>
               <label style={{ display: "flex", gap: "10px" }}>
                 <input
                   type="checkbox"
                   checked={acknowledgedAge}
                   onChange={(e) => setAcknowledgedAge(e.target.checked)}
                 />
-                <span><span>
-  I certify that I am at least 18 years of age and understand that all
-  products sold by The Tide Chix are intended for research purposes only.
-  I acknowledge that these products are not intended for human or animal
-  consumption and are not intended to diagnose, treat, cure, or prevent
-  any disease or medical condition. I understand that I am solely
-  responsible for determining the appropriate use of any product purchased
-  and agree to consult a qualified medical professional regarding any
-  health-related questions. By purchasing from The Tide Chix, I assume all
-  risks and liabilities associated with the purchase, possession,
-  handling, storage, and use of these products, and I agree to indemnify,
-  defend, and hold harmless The Tide Chix, its owners, affiliates,
-  employees, and representatives from any claims, damages, losses,
-  liabilities, costs, or expenses arising from my purchase or use of these
-  products.
-</span>.</span>
+                <span>
+                  I certify that I am at least 18 years of age and understand
+                  that all products sold by The Tide Chix are intended for
+                  research purposes only. I acknowledge that these products are
+                  not intended for human or animal consumption and are not
+                  intended to diagnose, treat, cure, or prevent any disease or
+                  medical condition. I understand that I am solely responsible
+                  for determining the appropriate use of any product purchased
+                  and agree to consult a qualified medical professional
+                  regarding any health-related questions. By purchasing from The
+                  Tide Chix, I assume all risks and liabilities associated with
+                  the purchase, possession, handling, storage, and use of these
+                  products, and I agree to indemnify, defend, and hold harmless
+                  The Tide Chix, its owners, affiliates, employees, and
+                  representatives from any claims, damages, losses, liabilities,
+                  costs, or expenses arising from my purchase or use of these
+                  products.
+                </span>
               </label>
 
               <label style={{ display: "flex", gap: "10px" }}>
@@ -582,4 +554,31 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid #cbd5e1",
   borderRadius: "8px",
   fontSize: "15px",
+};
+
+const rowStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "space-between",
+  marginBottom: "8px",
+};
+
+const noticeStyle: React.CSSProperties = {
+  marginTop: "20px",
+  padding: "18px",
+  borderRadius: "12px",
+  background: "#fff5fa",
+  color: "#073b5c",
+  lineHeight: "1.6",
+};
+
+const acknowledgementBoxStyle: React.CSSProperties = {
+  marginTop: "25px",
+  padding: "18px",
+  borderRadius: "12px",
+  background: "#f8fafc",
+  color: "#073b5c",
+  display: "grid",
+  gap: "14px",
+  fontSize: "14px",
+  lineHeight: "1.6",
 };

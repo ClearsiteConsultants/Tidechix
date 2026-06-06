@@ -11,18 +11,16 @@ export default function SuccessPage() {
   const delivery = searchParams.get("delivery") || "";
   const total = searchParams.get("total") || "";
 
-  const zelleEmail = "thetidechix@gmail.com";
-
   return (
-    <main className="min-h-screen bg-pink-50 px-4 py-10">
+    <main className="min-h-screen bg-pink-50 px-4 py-10 text-[#06395c]">
       <div className="mx-auto max-w-3xl rounded-2xl bg-white p-8 text-center shadow-lg">
         <div className="text-5xl">✓</div>
 
-        <h1 className="mt-4 text-4xl font-bold text-[#06395c]">
-          Order Received
-        </h1>
+        <h1 className="mt-4 text-4xl font-bold">Order Received</h1>
 
-        <p className="mt-4 text-lg">Thank you for your purchase!</p>
+        <p className="mt-4 text-lg text-gray-800">
+          Thank you for your purchase!
+        </p>
 
         <p className="mt-2 text-gray-700">
           Your order has been successfully submitted.
@@ -33,15 +31,9 @@ export default function SuccessPage() {
         </p>
 
         <div className="mt-8 rounded-xl border bg-gray-50 p-5">
-          <p className="text-lg font-bold text-[#06395c]">
-            Order #{orderNumber}
-          </p>
+          <p className="text-lg font-bold">Order #{orderNumber}</p>
 
-          {total && (
-            <p className="mt-2 text-lg font-semibold">
-              Total Due: ${total}
-            </p>
-          )}
+          {total && <p className="mt-2 text-lg font-semibold">Total Due: ${total}</p>}
 
           {payment && (
             <p className="mt-1 text-sm text-gray-600">
@@ -56,72 +48,67 @@ export default function SuccessPage() {
           )}
         </div>
 
-        {(payment === "Venmo" || payment === "Zelle") && (
+        {(payment === "Venmo" || payment === "Cash App") && (
           <div className="mt-8 rounded-xl border p-6">
-            <h2 className="text-2xl font-bold text-[#06395c]">
-              Complete Your Payment
-            </h2>
+            <h2 className="text-2xl font-bold">Complete Your Payment</h2>
 
             <p className="mt-2 text-sm text-gray-600">
-              Use one of the payment methods below and include your order number
-              in the payment note.
+              Include your order number in the payment note.
             </p>
 
             <p className="mt-4 text-sm font-semibold text-red-600">
               Orders are not processed until payment is received.
             </p>
 
-            <div className="mt-6">
-              <h3 className="text-lg font-bold">Venmo</h3>
+            {payment === "Venmo" && (
+              <div className="mt-6">
+                <h3 className="text-lg font-bold">Venmo</h3>
 
-              <img
-                src="/venmo-qr.png"
-                alt="Venmo QR Code"
-                className="mx-auto mt-3 h-56 w-56 rounded-lg border object-contain"
-              />
+                <img
+                  src="/venmo.jpeg"
+                  alt="Venmo QR Code"
+                  className="mx-auto mt-3 max-h-80 w-auto rounded-lg border bg-white p-2"
+                />
 
-              <p className="mt-2 text-sm font-medium">
-                Scan the QR code to pay with Venmo.
-              </p>
-            </div>
+                <p className="mt-3 font-semibold">@ThePeptideChix</p>
 
-            <div className="mt-8 border-t pt-6">
-              <h3 className="text-lg font-bold">Zelle</h3>
+                <p className="mt-2 text-sm font-medium">
+                  Scan the QR code to pay with Venmo.
+                </p>
 
-              <p className="mt-2 text-sm text-gray-600">
-                Send Zelle payment to:
-              </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  Please include Order #{orderNumber} in the payment notes.
+                </p>
+              </div>
+            )}
 
-              <p className="mt-1 font-semibold text-[#06395c]">
-                {zelleEmail}
-              </p>
+            {payment === "Cash App" && (
+              <div className="mt-6">
+                <h3 className="text-lg font-bold">Cash App</h3>
 
-              <button
-                type="button"
-                onClick={() => navigator.clipboard.writeText(zelleEmail)}
-                className="mt-3 rounded-lg bg-[#ec4aa3] px-5 py-2 text-sm font-semibold text-white hover:bg-[#d83f93]"
-              >
-                Copy Zelle Email
-              </button>
+                <img
+                  src="/cashapp.jpeg"
+                  alt="Cash App QR Code"
+                  className="mx-auto mt-3 max-h-80 w-auto rounded-lg border bg-white p-2"
+                />
 
-              <img
-                src="/zelle-qr.png"
-                alt="Zelle QR Code"
-                className="mx-auto mt-4 h-56 w-56 rounded-lg border object-contain"
-              />
+                <p className="mt-3 font-semibold">$ThePeptideChix</p>
 
-              <p className="mt-2 text-sm font-medium">
-                Scan the QR code or use the email above to pay with Zelle.
-              </p>
-            </div>
+                <p className="mt-2 text-sm font-medium">
+                  Scan the QR code to pay with Cash App.
+                </p>
+
+                <p className="mt-1 text-sm text-gray-600">
+                  Please include Order #{orderNumber} in the payment notes.
+                </p>
+              </div>
+            )}
           </div>
         )}
 
         {delivery === "Local Pickup" && (
           <div className="mt-8">
-            <h2 className="text-xl font-bold text-[#06395c]">
-              Local Pickup Orders
-            </h2>
+            <h2 className="text-xl font-bold">Local Pickup Orders</h2>
 
             <p className="mt-4 text-gray-700">
               If you selected Local Pickup at checkout, please contact The
@@ -130,20 +117,14 @@ export default function SuccessPage() {
 
             <p className="mt-4 text-lg font-medium">
               📞{" "}
-              <a
-                href="tel:+13852699260"
-                className="text-[#06395c] hover:text-[#ec4aa3] hover:underline"
-              >
+              <a href="tel:+13852699260" className="hover:text-[#ec4aa3] hover:underline">
                 (385) 269-9260
               </a>
             </p>
 
             <p className="mt-2 text-lg">
               ✉{" "}
-              <a
-                href="mailto:thetidechix@gmail.com"
-                className="text-[#ec4aa3] hover:underline"
-              >
+              <a href="mailto:thetidechix@gmail.com" className="text-[#ec4aa3] hover:underline">
                 thetidechix@gmail.com
               </a>
             </p>
@@ -151,11 +132,10 @@ export default function SuccessPage() {
         )}
 
         <div className="mt-8 rounded-xl border p-5">
-          <h2 className="text-xl font-bold text-[#06395c]">Questions?</h2>
+          <h2 className="text-xl font-bold">Questions?</h2>
 
           <p className="mt-3 text-gray-700">
-            For order questions, shipping updates, or product support, contact
-            us anytime.
+            For order questions, shipping updates, or product support, contact us anytime.
           </p>
         </div>
 
