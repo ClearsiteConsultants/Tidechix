@@ -39,10 +39,10 @@ export async function POST(req: Request) {
       };
     });
 
-    const calculatedSubtotal = cartProducts.reduce(
-      (sum, item) => sum + item.subtotal,
-      0
-    );
+const calculatedSubtotal = cartProducts.reduce(
+  (sum: number, item: { subtotal: number }) => sum + item.subtotal,
+  0
+);
 
     const finalSubtotal =
       typeof subtotal === "number" ? subtotal : calculatedSubtotal;
