@@ -57,14 +57,19 @@ const calculatedSubtotal = cartProducts.reduce(
     const finalTotal =
       typeof total === "number" ? total : finalSubtotal + finalShippingCost;
 
-    const itemsText = cartProducts
-      .map(
-        (item) =>
-          `${item.quantity} x ${item.name} — $${item.price.toFixed(
-            2
-          )} each — $${item.subtotal.toFixed(2)}`
-      )
-      .join("\n");
+  const itemsText = cartProducts
+  .map(
+    (item: {
+      name: string;
+      price: number;
+      quantity: number;
+      subtotal: number;
+    }) =>
+      `${item.quantity} x ${item.name} — $${item.price.toFixed(
+        2
+      )} each — $${item.subtotal.toFixed(2)}`
+  )
+  .join("\n");
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
