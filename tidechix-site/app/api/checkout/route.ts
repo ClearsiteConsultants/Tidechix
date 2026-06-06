@@ -1,75 +1,70 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { PRODUCTS } from "@/app/lib/products";
 
-type CartItem = {
-  id: string;
-  quantity: number;
-};
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { cart, customer, subtotal, shippingCost, total } = await req.json();
+    const body = await request.json();
 
-    if (!cart || cart.length === 0) {
-      return NextResponse.json({ error: "Cart is empty" }, { status: 400 });
+    const { customer, cart } = body;
+
+    if (!customer) {
+      return NextResponse.json(
+        { error: "Customer information is required." },
+        { status: 400 }
+      );
     }
 
-    if (!customer?.name || !customer?.email || !customer?.phone) {
+    if (!cart || cart.length === 0) {
       return NextResponse.json(
-        { error: "Missing customer information" },
+        { error: "Cart is empty." },
+        { status: 400 }
+      );
+    }
+
+    if (!customer.name || !customer.email || !customer.phone) {
+      return NextResponse.json(
+        { error: "Name, email, and phone number are required." },
+        { status: 400 }
+      );
+    }
+
+    if (
+      customer.deliveryMethod === "Shipping" &&
+      (!customer.address || !customer.city || !customer.state || !customer.zip)
+    ) {
+      return NextResponse.json(
+        { error: "Shipping address is required for shipping orders." },
+        { status: 400 }
+      );
+    }
+
+    if (!customer.paymentMethod) {
+      return NextResponse.json(
+        { error: "Payment method is required." },
         { status: 400 }
       );
     }
 
     const orderNumber = `TC-${Date.now()}`;
 
-    const cartProducts = cart.map((item: CartItem) => {
-      const product = PRODUCTS.find((p) => p.id === item.id);
-
-      if (!product) {
-        throw new Error(`Product not found: ${item.id}`);
-      }
-
-      return {
-        name: product.name,
-        price: product.price,
-        quantity: item.quantity,
-        subtotal: product.price * item.quantity,
-      };
-    });
-
-const calculatedSubtotal = cartProducts.reduce(
-  (sum: number, item: { subtotal: number }) => sum + item.subtotal,
-  0
-);
-
-    const finalSubtotal =
-      typeof subtotal === "number" ? subtotal : calculatedSubtotal;
+    const finalSubtotal = cart.reduce(
+      (sum: number, item: any) => sum + item.price * item.quantity,
+      0
+    );
 
     const finalShippingCost =
-      typeof shippingCost === "number"
-        ? shippingCost
-        : customer.deliveryMethod === "Shipping"
-        ? 10
-        : 0;
+      customer.deliveryMethod === "Shipping" ? 10 : 0;
 
-    const finalTotal =
-      typeof total === "number" ? total : finalSubtotal + finalShippingCost;
+    const finalTotal = finalSubtotal + finalShippingCost;
 
-  const itemsText = cartProducts
-  .map(
-    (item: {
-      name: string;
-      price: number;
-      quantity: number;
-      subtotal: number;
-    }) =>
-      `${item.quantity} x ${item.name} — $${item.price.toFixed(
-        2
-      )} each — $${item.subtotal.toFixed(2)}`
-  )
-  .join("\n");
+    const itemsText = cart
+      .map(
+        (item: any) =>
+          `${item.name} x ${item.quantity} - $${(
+            item.price * item.quantity
+          ).toFixed(2)}`
+      )
+      .join("\n");
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -116,7 +111,69 @@ If Cash Pickup was selected, customer should contact The Tide Chix for pickup in
       `,
     });
 
-    return NextResponse.json({ orderNumber });
+    await resend.emails.send({
+      from: "The Tide Chix <onboarding@resend.dev>",
+      to: customer.email,
+      subject: `Tide Chix Order Confirmation ${orderNumber}`,
+      text: `
+Thank you for your order from The Tide Chix!
+
+ORDER NUMBER
+${orderNumber}
+
+CUSTOMER INFORMATION
+Name: ${customer.name}
+Email: ${customer.email}
+Phone: ${customer.phone}
+
+DELIVERY METHOD
+${customer.deliveryMethod}
+
+${
+  customer.deliveryMethod === "Shipping"
+    ? `SHIPPING ADDRESS
+${customer.address || ""}
+${customer.city || ""}, ${customer.state || ""} ${customer.zip || ""}`
+    : ""
+}
+
+PAYMENT METHOD
+${customer.paymentMethod}
+
+ITEMS ORDERED
+${itemsText}
+
+ORDER TOTALS
+Subtotal: $${finalSubtotal.toFixed(2)}
+Shipping: $${finalShippingCost.toFixed(2)}
+Total: $${finalTotal.toFixed(2)}
+
+${
+  customer.paymentMethod === "Venmo" || customer.paymentMethod === "Zelle"
+    ? `IMPORTANT:
+Payment is still required before your order can be processed.
+
+Please include Order #${orderNumber} in your payment notes.`
+    : ""
+}
+
+LOCAL PICKUP
+If you selected Local Pickup, please contact The Tide Chix to arrange pickup instructions.
+
+Phone: (385) 269-9260
+Email: thetidechix@gmail.com
+
+Thank you,
+The Tide Chix
+      `,
+    });
+
+    return NextResponse.json({
+      orderNumber,
+      payment: customer.paymentMethod,
+      delivery: customer.deliveryMethod,
+      total: finalTotal.toFixed(2),
+    });
   } catch (error: any) {
     console.error("Order error:", error);
 
