@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function SuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
 
   const orderNumber = searchParams.get("order") || "N/A";
@@ -33,7 +34,9 @@ export default function SuccessPage() {
         <div className="mt-8 rounded-xl border bg-gray-50 p-5">
           <p className="text-lg font-bold">Order #{orderNumber}</p>
 
-          {total && <p className="mt-2 text-lg font-semibold">Total Due: ${total}</p>}
+          {total && (
+            <p className="mt-2 text-lg font-semibold">Total Due: ${total}</p>
+          )}
 
           {payment && (
             <p className="mt-1 text-sm text-gray-600">
@@ -117,14 +120,20 @@ export default function SuccessPage() {
 
             <p className="mt-4 text-lg font-medium">
               📞{" "}
-              <a href="tel:+13852699260" className="hover:text-[#ec4aa3] hover:underline">
+              <a
+                href="tel:+13852699260"
+                className="hover:text-[#ec4aa3] hover:underline"
+              >
                 (385) 269-9260
               </a>
             </p>
 
             <p className="mt-2 text-lg">
               ✉{" "}
-              <a href="mailto:thetidechix@gmail.com" className="text-[#ec4aa3] hover:underline">
+              <a
+                href="mailto:thetidechix@gmail.com"
+                className="text-[#ec4aa3] hover:underline"
+              >
                 thetidechix@gmail.com
               </a>
             </p>
@@ -135,7 +144,8 @@ export default function SuccessPage() {
           <h2 className="text-xl font-bold">Questions?</h2>
 
           <p className="mt-3 text-gray-700">
-            For order questions, shipping updates, or product support, contact us anytime.
+            For order questions, shipping updates, or product support, contact
+            us anytime.
           </p>
         </div>
 
@@ -147,5 +157,13 @@ export default function SuccessPage() {
         </Link>
       </div>
     </main>
+  );
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={<div>Loading order details...</div>}>
+      <SuccessContent />
+    </Suspense>
   );
 }

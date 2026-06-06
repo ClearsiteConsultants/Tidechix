@@ -77,11 +77,11 @@ export async function POST(request: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails.send({
-      from: "The Tide Chix <onboarding@resend.dev>",
-      to: "thetidechix@gmail.com",
-      subject: `New Tide Chix Order ${orderNumber}`,
-      text: `
+const adminEmail = await resend.emails.send({
+  from: "The Tide Chix <onboarding@resend.dev>",
+  to: "thetidechix@gmail.com",
+  subject: `New Tide Chix Order ${orderNumber}`,
+  text: `
 NEW ORDER RECEIVED
 
 Order Number:
@@ -119,6 +119,7 @@ Payment must be received before any Venmo or Cash App orders are shipped or avai
 If Cash Pickup was selected, customer should contact The Tide Chix for pickup instructions.
       `,
     });
+console.log("ADMIN EMAIL RESULT:", adminEmail);
 
     await resend.emails.send({
       from: "The Tide Chix <onboarding@resend.dev>",
