@@ -121,9 +121,9 @@ If Cash Pickup was selected, customer should contact The Tide Chix for pickup in
     });
 console.log("ADMIN EMAIL RESULT:", adminEmail);
 
-    await resend.emails.send({
-      from: "The Tide Chix <onboarding@resend.dev>",
-      to: customer.email,
+await resend.emails.send({
+  from: "The Tide Chix <onboarding@resend.dev>",
+  to: [customer.email, "thetidechix@gmail.com"],
       subject: `Tide Chix Order Confirmation ${orderNumber}`,
       text: `
 Thank you for your order from The Tide Chix!
