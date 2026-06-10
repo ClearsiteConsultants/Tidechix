@@ -155,10 +155,10 @@ export default function Home() {
 <p className="mt-8 text-2xl font-semibold">
   📞{" "}
   <a
-    href="tel:+13852699260"
+    href="tel:+18013864110"
     className="hover:text-[#ec4aa3] hover:underline"
   >
-    (385) 269-9260
+    (801) 386-4110
   </a>
 </p>
 
