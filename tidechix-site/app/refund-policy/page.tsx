@@ -44,10 +44,10 @@ export default function RefundPolicyPage() {
   <div>
     📞{" "}
     <a
-      href="tel:+13852699260"
+      href="tel:+18013864110"
       className="text-[#ec4aa3] hover:underline"
     >
-      (385) 269-9260
+      (801) 386-4110
     </a>
   </div>
 

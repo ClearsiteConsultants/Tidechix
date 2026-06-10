@@ -22,10 +22,10 @@ export default function Footer() {
 
      <div className="mt-2 flex flex-wrap justify-center gap-4">
   <a
-    href="tel:+13852699260"
+    href="tel:+18013864110"
     className="hover:text-[#ec4aa3] hover:underline"
   >
-    📞 (385) 269-9260
+    📞 (801) 386-4110
   </a>
 
   <a
