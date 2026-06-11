@@ -121,10 +121,10 @@ function SuccessContent() {
             <p className="mt-4 text-lg font-medium">
               📞{" "}
               <a
-                href="tel:+18013864110"
+                href="tel:+13852699260"
                 className="hover:text-[#ec4aa3] hover:underline"
               >
-                (801) 386-4110
+                (385) 269-9260
               </a>
             </p>
 

@@ -61,10 +61,10 @@ export default function TermsPage() {
             <p className="mt-4 text-lg font-medium">
               📞{" "}
               <a
-                href="tel:+18013864110"
+                href="tel:+13852699260"
                 className="text-[#06395c] hover:text-[#ec4aa3] hover:underline"
               >
-                (801) 386-4110
+                (385) 269-9260
               </a>
             </p>
 

@@ -45,10 +45,10 @@ export default function ShippingPolicyPage() {
   <div>
     📞{" "}
     <a
-      href="tel:+18013864110"
+      href="tel:+13852699260"
       className="text-[#ec4aa3] hover:underline"
     >
-      (801) 386-4110
+      (385) 269-9260
     </a>
   </div>
 
