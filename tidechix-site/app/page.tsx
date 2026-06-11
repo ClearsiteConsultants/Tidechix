@@ -149,16 +149,16 @@ export default function Home() {
           className="bg-[#06395c] px-6 py-20 text-center text-white"
         >
           <h2 className="text-4xl font-light md:text-5xl">
-            CONTACT THE PEPTIDE CHIX
+            CONTACT THE PEPTIDE CHIX TEST123
           </h2>
 
 <p className="mt-8 text-2xl font-semibold">
   📞{" "}
   <a
-    href="tel:+18013864110"
+    href="tel:+13852699260"
     className="hover:text-[#ec4aa3] hover:underline"
   >
-    (801) 386-4110
+    (385) 269-9260
   </a>
 </p>
 
