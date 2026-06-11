@@ -149,7 +149,7 @@ export default function Home() {
           className="bg-[#06395c] px-6 py-20 text-center text-white"
         >
           <h2 className="text-4xl font-light md:text-5xl">
-            CONTACT THE PEPTIDE CHIX TEST123
+            CONTACT THE PEPTIDE CHIX
           </h2>
 
 <p className="mt-8 text-2xl font-semibold">
