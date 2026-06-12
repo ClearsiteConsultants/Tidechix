@@ -106,6 +106,29 @@ export async function POST(request: Request) {
         return `${name} x ${quantity} - $${(price * quantity).toFixed(2)}`;
       })
       .join("\n");
+      const orderDate = new Date();
+
+      await fetch("https://script.google.com/macros/s/AKfycbx9pHGkOUdWiK8J0FGL0nMutn9hxMiqWG69Q5NJhI2NAZk83QHqu_iuo5JxpjiYL2BmcA/exec", {
+      method: "POST",
+      headers: {
+     "Content-Type": "application/json",
+      },
+     body: JSON.stringify({
+    orderNumber,
+    date: orderDate.toLocaleDateString(),
+    orderTime: orderDate.toLocaleTimeString(),
+    name: customer.name,
+    email: customer.email,
+    phone: customer.phone,
+    items: itemsText,
+    subtotal: finalSubtotal.toFixed(2),
+    shipping: finalShippingCost.toFixed(2),
+    total: finalTotal.toFixed(2),
+    paymentMethod: customer.paymentMethod,
+    deliveryMethod: customer.deliveryMethod,
+    notes: customer.notes || "",
+  }),
+});
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
