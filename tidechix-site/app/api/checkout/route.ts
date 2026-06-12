@@ -115,8 +115,12 @@ export async function POST(request: Request) {
       },
      body: JSON.stringify({
     orderNumber,
-    date: orderDate.toLocaleDateString(),
-    orderTime: orderDate.toLocaleTimeString(),
+    date: orderDate.toLocaleDateString("en-US", {
+    timeZone: "America/Denver",
+}),
+    orderTime: orderDate.toLocaleTimeString("en-US", {
+    timeZone: "America/Denver",
+}),
     name: customer.name,
     email: customer.email,
     phone: customer.phone,
