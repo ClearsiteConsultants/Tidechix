@@ -32,12 +32,16 @@ const descriptions: Record<string, string> = {
   aod9604: "Weight management support associated with fat metabolism research.",
   hulkstack10:
     "Growth hormone pathway support for recovery, sleep quality, body composition, and performance.",
+  sermorelin2:
+   "Supports natural growth hormone signaling, recovery, sleep, and body composition goals.",  
   sermorelin5:
     "Supports natural growth hormone signaling, recovery, sleep, and body composition goals.",
   tesamorelin10:
     "Supports natural growth hormone signaling and metabolic support.",
   wolverine10:
     "BPC-157 + TB-500. Comprehensive recovery and soft tissue support.",
+  wolverine20:
+  "BPC-157 + TB-500. Comprehensive recovery and soft tissue support.",
   ghkcu50:
     "Supports collagen health, skin texture, wound recovery, and hair wellness.",
   melanotan1: "Associated with skin tanning and pigmentation support.",
@@ -117,12 +121,14 @@ export default function ProductsPage() {
   const wellnessSections: ProductSection[] = [
     {
       title: "Muscle Performance, Strength & Recovery",
-      products: [
-        getProduct("hulkstack10"),
-        getProduct("sermorelin5"),
-        getProduct("tesamorelin10"),
-        getProduct("wolverine10"),
-      ].filter(isActive),
+   products: [
+  getProduct("hulkstack10"),
+  getProduct("sermorelin2"),
+  getProduct("sermorelin5"),
+  getProduct("tesamorelin10"),
+  getProduct("wolverine10"),
+  getProduct("wolverine20"),
+].filter(isActive),
     },
     {
       title: "Skin, Hair & Aesthetic Wellness",

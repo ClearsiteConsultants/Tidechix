@@ -44,12 +44,18 @@ export const PRODUCTS: Product[] = [
     stripePriceId: "price_1Teeh7Kxrgcoq0F7Fnk0v3h6",
     category: "GLP-1",
   },
-
   {
     id: "hulkstack10",
     name: "CJC-1295 + Ipamorelin 10MG (Hulk Stack)",
     price: 75,
     stripePriceId: "price_1TeJgIKxrgcoq0F7QrPP5GYP",
+    category: "Peptides",
+  },
+  {
+    id: "sermorelin2",
+    name: "Sermorelin 2MG",
+    price: 40,
+    stripePriceId: "",
     category: "Peptides",
   },
   {
@@ -71,6 +77,13 @@ export const PRODUCTS: Product[] = [
     name: "Wolverine Stack 10MG (BPC-157 + TB-500)",
     price: 65,
     stripePriceId: "price_1TeJmJKxrgcoq0F7K425VkUZ",
+    category: "Peptides",
+  },
+  {
+    id: "wolverine20",
+    name: "Wolverine Stack 20MG (BPC-157 + TB-500)",
+    price: 100,
+    stripePriceId: "",
     category: "Peptides",
   },
   {
@@ -174,17 +187,17 @@ export const PRODUCTS: Product[] = [
   {
     id: "vip10",
     name: "VIP 10MG",
-    price: 60,
+    price: 55,
     stripePriceId: "price_1TeeivKxrgcoq0F7RG8NkUm4",
     category: "Peptides",
   },
-{
-  id: "bacwater10",
-  name: "Bacteriostatic Water 10ML",
-  price: 5,
-  stripePriceId: "price_1TejurKxrgcoq0F7rQ9y7Fio",
-  category: "Supplies",
-},
+  {
+    id: "bacwater10",
+    name: "Bacteriostatic Water 10ML",
+    price: 5,
+    stripePriceId: "price_1TejurKxrgcoq0F7rQ9y7Fio",
+    category: "Supplies",
+  },
   {
     id: "alcoholwipes",
     name: "Alcohol Wipes - Box of 100",
