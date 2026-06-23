@@ -170,7 +170,7 @@ Shipping: $${shippingCost.toFixed(2)}
 Total: $${finalTotal.toFixed(2)}
 
 CUSTOMER NOTES
-${customer.notes || "None"}
+${customer.notes || "None"}girt add .
 
 IMPORTANT
 Payment must be received before any Venmo or Cash App orders are shipped or available for pickup.
@@ -207,7 +207,7 @@ ${itemsText}
 
 ORDER TOTALS
 Subtotal: $${finalSubtotal.toFixed(2)}
-Shipping: $${ShippingCost.toFixed(2)}
+Shipping: $${shippingCost.toFixed(2)}
 Total: $${finalTotal.toFixed(2)}
 
 ${
