@@ -94,7 +94,7 @@ export async function POST(request: Request) {
       return sum + price * quantity;
     }, 0);
 
-    const finalShippingCost = customer.deliveryMethod === "Shipping" ? 10 : 0;
+    const shippingCost = customer.deliveryMethod === "Shipping" ? 12 : 0;
     const finalTotal = finalSubtotal + finalShippingCost;
 
     const itemsText = cart

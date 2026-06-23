@@ -83,7 +83,7 @@ export default function CartPage() {
     0
   );
 
-  const shippingCost = customer.deliveryMethod === "Shipping" ? 10 : 0;
+ const shippingCost = customer.deliveryMethod === "Shipping" ? 12 : 0;
   const total = subtotal + shippingCost;
 
   const updateDeliveryMethod = (deliveryMethod: string) => {
@@ -302,7 +302,7 @@ export default function CartPage() {
                 </span>
                 <strong>
                   {customer.deliveryMethod === "Shipping"
-                    ? "$10.00"
+                    ? "$12.00"
                     : "$0.00"}
                 </strong>
               </div>
@@ -385,7 +385,7 @@ export default function CartPage() {
                 onChange={(e) => updateDeliveryMethod(e.target.value)}
                 style={inputStyle}
               >
-                <option value="Shipping">Shipping - $10 flat rate</option>
+                <option value="Shipping">Shipping - $12 flat rate</option>
                 <option value="Local Pickup">Local Pickup - Free</option>
               </select>
 
@@ -412,7 +412,7 @@ export default function CartPage() {
               </h2>
 
               <p style={{ color: "#64748b", marginTop: "-6px" }}>
-                Shipping is $10 flat rate. If choosing local pickup, address is
+                Shipping is $12 flat rate. If choosing local pickup, address is
                 not required.
               </p>
 
