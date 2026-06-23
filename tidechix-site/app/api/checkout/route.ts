@@ -166,7 +166,7 @@ ${itemsText}
 
 ORDER TOTALS
 Subtotal: $${finalSubtotal.toFixed(2)}
-Shipping: $${ShippingCost.toFixed(2)}
+Shipping: $${shippingCost.toFixed(2)}
 Total: $${finalTotal.toFixed(2)}
 
 CUSTOMER NOTES
