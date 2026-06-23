@@ -95,7 +95,7 @@ export async function POST(request: Request) {
     }, 0);
 
     const shippingCost = customer.deliveryMethod === "Shipping" ? 12 : 0;
-    const finalTotal = finalSubtotal + finalShippingCost;
+    const finalTotal = finalSubtotal + shippingCost;
 
     const itemsText = cart
       .map((item: any) => {
@@ -126,7 +126,7 @@ export async function POST(request: Request) {
     phone: customer.phone,
     items: itemsText,
     subtotal: finalSubtotal.toFixed(2),
-    shipping: finalShippingCost.toFixed(2),
+    shipping: shippingCost.toFixed(2),
     total: finalTotal.toFixed(2),
     paymentMethod: customer.paymentMethod,
     deliveryMethod: customer.deliveryMethod,
@@ -166,7 +166,7 @@ ${itemsText}
 
 ORDER TOTALS
 Subtotal: $${finalSubtotal.toFixed(2)}
-Shipping: $${finalShippingCost.toFixed(2)}
+Shipping: $${ShippingCost.toFixed(2)}
 Total: $${finalTotal.toFixed(2)}
 
 CUSTOMER NOTES
@@ -207,7 +207,7 @@ ${itemsText}
 
 ORDER TOTALS
 Subtotal: $${finalSubtotal.toFixed(2)}
-Shipping: $${finalShippingCost.toFixed(2)}
+Shipping: $${ShippingCost.toFixed(2)}
 Total: $${finalTotal.toFixed(2)}
 
 ${
